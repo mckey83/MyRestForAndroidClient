@@ -16,6 +16,9 @@ public class CategoryServiceDataJpa implements CategoryService {
 	@Autowired
 	CategoryReprository categoryReprository;
 
+	// @Autowired
+	// CategoryReprository categoryReprository;
+
 	@Override
 	public List<Product> getProductsByCategoryId(int id) {
 		Integer realId = id;
