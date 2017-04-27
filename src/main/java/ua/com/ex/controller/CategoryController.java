@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ua.com.ex.model.Category;
-import ua.com.ex.model.Product;
 import ua.com.ex.service.CategoryService;
 
 @RestController
@@ -22,9 +21,9 @@ public class CategoryController {
 		return categoryService.getAll();
 	}
 
-	@RequestMapping("/category/{id}/product/")
-	public List<Product> getCategoryById(@PathVariable("id") int id) {
-		return categoryService.getProductsByCategoryId(id);
+	@RequestMapping("/category/{id}/")
+	public Category getCategoryById(@PathVariable("id") int id) {
+		return categoryService.getCategoryById(id);
 	}
 
 }

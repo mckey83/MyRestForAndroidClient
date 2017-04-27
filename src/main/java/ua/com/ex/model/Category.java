@@ -1,13 +1,8 @@
 package ua.com.ex.model;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -29,9 +24,8 @@ public class Category {
 	@Column(name = "name")
 	private String name;
 
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "category_id", referencedColumnName = "id")
-	private List<Product> products;
+	@Column(name = "parent_id")
+	private int parentId;
 
 	@Override
 	public int hashCode() {
