@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import ua.com.ex.model.Category;
 import ua.com.ex.model.Product;
 import ua.com.ex.reprository.CategoryReprository;
+import ua.com.ex.reprository.ImageReprository;
 
 @Service("categoryService")
 public class CategoryServiceDataJpa implements CategoryService {
@@ -16,15 +17,16 @@ public class CategoryServiceDataJpa implements CategoryService {
 	@Autowired
 	CategoryReprository categoryReprository;
 
-	// @Autowired
-	// CategoryReprository categoryReprository;
+	@Autowired
+	ImageReprository imageReprository;
 
 	@Override
 	public List<Product> getProductsByCategoryId(int id) {
 		Integer realId = id;
+
 		List<Product> result = categoryReprository.findOne(realId).getProducts();
 		for (Product current : result) {
-			current.setImage();
+			current.setImageBase64(imageReprository.getProductImageById(id));
 		}
 		return result;
 	}
