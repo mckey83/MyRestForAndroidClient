@@ -10,6 +10,6 @@ public interface ProductService {
 
 	Product getProductById(int id);
 
-	List<Product> getProductByCategoryId(int id);
+	List<Product> getProductByCategoryId(int id, int page, int itemQuantity);
 
 }

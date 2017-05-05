@@ -25,8 +25,8 @@ public class ProductController {
 		return productService.getProductById(id);
 	}
 
-	@RequestMapping("/category/{id}/product/")
-	public List<Product> getProductByCategoryId(@PathVariable("id") int id) {
-		return productService.getProductByCategoryId(id);
+	@RequestMapping("/category/{id}/product/{page}/page/{itemquantity}")
+	public List<Product> getProductByCategoryId(@PathVariable("id") int id, @PathVariable("page") int page, @PathVariable("itemquantity") int itemQuantity) {
+		return productService.getProductByCategoryId(id ,page, itemQuantity); 
 	}
 }
