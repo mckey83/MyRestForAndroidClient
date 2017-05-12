@@ -19,7 +19,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <joinfaces.version>2.3.6</joinfaces.version>
-        <all-themes.version>1.0.10</all-themes.version>
+        <all-themes.version>1.0.10</all-themes.version>       
     </properties>
 
     <dependencies>
@@ -69,7 +69,7 @@
             <version>1.10.19</version>
             <scope>test</scope>
         </dependency>
-    </dependencies>
+            </dependencies>
     <build>
         <plugins>
             <plugin>

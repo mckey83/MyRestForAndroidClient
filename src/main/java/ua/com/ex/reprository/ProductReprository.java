@@ -10,5 +10,7 @@ import ua.com.ex.model.Product;
 
 public interface ProductReprository extends PagingAndSortingRepository<Product, Integer> {
 	@Query("FROM Product p WHERE p.categoryId = ?1")
-	List<Product> findProductByCategoryId(Pageable page, int id);
+	List<Product> findProductByCategoryId(Pageable page, int categoryId);
+	
+	
 }

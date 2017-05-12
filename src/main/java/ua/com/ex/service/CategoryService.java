@@ -6,7 +6,9 @@ import ua.com.ex.model.Category;
 
 public interface CategoryService {
 
-	Category getCategoryById(int id);
-
+	Category getCategoryById(int categoryId);
+	
 	List<Category> getAll();
+	
+	List<Category> getCategoryByParentId(int categoryByParentId);
 }
