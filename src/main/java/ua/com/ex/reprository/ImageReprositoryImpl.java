@@ -19,7 +19,7 @@ public class ImageReprositoryImpl implements ImageReprository {
 		try {
 			f = new File("/media/alex/d84bf558-86ff-4f37-906a-f167b938fbae/alexander/www/new.ex.com.ua/media/images/products_images/" + productId + "_thumb.png");
 			if (!f.exists()) {
-				f = new File("src/main/resources/images/ex.png");
+				f = new File("classes/images/ex.png");
 			}
 			fis = new FileInputStream(f);
 			byte byteArray[] = new byte[(int) f.length()];
@@ -43,9 +43,9 @@ public class ImageReprositoryImpl implements ImageReprository {
         FileInputStream fis = null;
         String result = "";
         try {
-            f = new File("src/main/resources/images/categories/cat_"+ categoryId + ".png");
+            f = new File("classes/images/categories/cat_"+ categoryId + ".png");
             if (!f.exists()) {
-                f = new File("src/main/resources/images/ex.png");
+                f = new File("classes/images/ex.png");
             }
             fis = new FileInputStream(f);
             byte byteArray[] = new byte[(int) f.length()];

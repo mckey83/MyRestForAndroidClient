@@ -45,7 +45,13 @@ public class CategoryServiceDataJpa implements CategoryService {
     }
 	
     private Category prepareForSend(Category current) {
-        current.setImageBase64(imageReprository.getCategoryImageById(current.getId()));
+        String image = imageReprository.getCategoryImageById(current.getId());
+        if (!image.isEmpty()) {
+            current.setImageBase64(image);
+        }
+        else {
+            current.setImageBase64("null");
+        }
         current.setQuantityOfProducts(categoryReprository.findProductQuantityByCategoryId(current.getId()));
         return current;
     }
