@@ -1,5 +1,6 @@
 package ua.com.ex.service;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -30,8 +31,9 @@ public class FtpDownloader {
             ftp.enterLocalPassiveMode();
         }
 
-        public void downloadFile(String remoteFilePath, String localFilePath) {
-            try (FileOutputStream fos = new FileOutputStream(localFilePath)) {
+        public void downloadFile(String remoteFilePath, String fileName) {
+           
+            try (FileOutputStream fos = new FileOutputStream(new File(fileName),true)) {
                 this.ftp.retrieveFile(remoteFilePath, fos);
             } catch (IOException e) {
                 System.out.println("downloadFile error:");

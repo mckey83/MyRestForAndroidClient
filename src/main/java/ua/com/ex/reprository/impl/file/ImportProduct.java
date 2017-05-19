@@ -1,5 +1,6 @@
 package ua.com.ex.reprository.impl.file;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class ImportProduct extends Import{
 
@@ -8,26 +9,44 @@ public class ImportProduct extends Import{
     private static final int COLUMN_PRICE = 17;
     private static final int COLUMN_QUANTITY = 22;
     
+    private static final String PATTERN_GET_TEXT_FIELDS = "\\,'.*?\\'";
+
     @Override
     protected ArrayList<String> mapper(ArrayList<String> in, ArrayList<String> stringFieldAll) {
         ArrayList<String> out = new ArrayList<>();
-        out.add(in.get(COLUMN_ID));        
-        out.add(stringFieldAll.get(1));
-        out.add(in.get(COLUMN_PRICE));
-        out.add(in.get(COLUMN_QUANTITY));
-        out.add(in.get(COLUMN_PARENT_CATEGORY_ID));
+        String id = in.get(COLUMN_ID);
+       // System.out.print(id+" ");
+        out.add(id);
+
+        String name =  stringFieldAll.get(1);
+    //    System.out.print(name+" ");
+        out.add(name);
+
+        String price = in.get(COLUMN_PRICE);
+    //    System.out.print(price+" ");
+        out.add(price);
+
+        String quantity = in.get(COLUMN_QUANTITY);
+     //   System.out.print(quantity+" ");
+        out.add(quantity);
+
+        String parentcategory = in.get(COLUMN_PARENT_CATEGORY_ID);
+    //    System.out.print(parentcategory+"\n");
+        out.add(parentcategory);
         return out;
     }
 
     @Override
-    protected String getPrefix() {
+    protected Pattern getPatern() {
         // TODO Auto-generated method stub
-        return "INSERT INTO PRODUCTS (ID, NAME, PRICE, QUANTITY, PARENT_CATEGORY) VALUES ";
+        return Pattern.compile(PATTERN_GET_TEXT_FIELDS);
     }
 
-    
-    
-    
-    
+
+
+
+
+
+
 
 }

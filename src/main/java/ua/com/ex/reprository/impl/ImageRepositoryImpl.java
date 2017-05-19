@@ -11,13 +11,13 @@ import ua.com.ex.util.Util;
 @Repository("imageRepository")
 public class ImageRepositoryImpl implements ImageRepository {
 
-    private static final String DEFAULT_IMAGE = "images/ex.png";
+    private static final String DEFAULT_IMAGE = "/images/ex.png";
 
     @Override
     public String getProductImageById(int productId) {
         String result = "";
         try {
-            String path = "images/products/thumb_"+ productId + ".png";            
+            String path = "/images/products/thumb_"+ productId + ".png";            
             ByteArrayOutputStream stream = Util.readFile(path);
             result = Base64.encodeBase64String(stream.toByteArray());
             if(result.isEmpty() ) {
@@ -34,7 +34,7 @@ public class ImageRepositoryImpl implements ImageRepository {
     public String getCategoryImageById(int categoryId) {
         String result = "";
         try {
-            String path = "images/categories/cat_"+ categoryId + ".png";            
+            String path = "/images/categories/cat_"+ categoryId + ".png";            
             ByteArrayOutputStream stream = Util.readFile(path);
             result = Base64.encodeBase64String(stream.toByteArray());
             if(result.isEmpty() ) {

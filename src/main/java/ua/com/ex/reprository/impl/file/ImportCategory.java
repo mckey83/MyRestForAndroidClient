@@ -1,21 +1,26 @@
 package ua.com.ex.reprository.impl.file;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class ImportCategory extends Import {
 
+    private static final String PATTERN_GET_TEXT_FIELDS = "\\,'.*?\\',";
+    
     @Override
-    protected ArrayList<String> mapper(ArrayList<String> in, ArrayList<String> stringFieldAll) {
+    protected ArrayList<String> mapper(ArrayList<String> numericFieldsAll, ArrayList<String> stringFieldAll) {
         ArrayList<String> out = new ArrayList<>();
-        out.add(in.get(0));        
-        out.add(stringFieldAll.get(0));
-        out.add(in.get(2));
+        out.add(numericFieldsAll.get(0));        
+        out.add(stringFieldAll.get(0));        
+        out.add(numericFieldsAll.get(2));        
         out.add("0");
         return out;
     }
 
     @Override
-    protected String getPrefix() {        
-        return "INSERT INTO CATEGORIES (ID, NAME, PARENT_ID, PRODUCT_QUANTITY) VALUES ";
+    protected Pattern getPatern() {        
+        return Pattern.compile(PATTERN_GET_TEXT_FIELDS);
     }
+
+    
 
 }

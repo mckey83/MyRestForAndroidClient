@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ua.com.ex.model.Category;
+import ua.com.ex.model.Product;
 import ua.com.ex.reprository.CategoryFileRepository;
 import ua.com.ex.reprository.CategoryRepository;
+import ua.com.ex.reprository.ProductFileRepository;
+import ua.com.ex.reprository.ProductRepository;
 import ua.com.ex.service.RemoteDataService;
 
 @RestController
@@ -28,7 +31,13 @@ public class CommandController {
     private CategoryFileRepository categoryFileRepository;
 
     @Autowired
+    private ProductFileRepository productFileRepository;
+
+    @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     @GetMapping("/shutdown/start")
     public void shutdown() {
@@ -37,8 +46,8 @@ public class CommandController {
     }
 
     @GetMapping("/update")
-    public void update() {
-        remoteDataService.updateFromEx();
+    public String update() {
+        return remoteDataService.updateFromEx();
     }
 
     @GetMapping("/restart")
@@ -49,17 +58,20 @@ public class CommandController {
     @GetMapping("/import")
     public String importData() {        
         List<Category> categories = categoryFileRepository.getAll();
-        if (!categories.isEmpty()){
+        List<Product> products = productFileRepository.getAll();
+        if (!categories.isEmpty() && !products.isEmpty()){
             for(Category current: categories){
                 categoryRepository.save(current);
+            } 
+            for(Product current: products){
+                productRepository.save(current);
             }           
-            return "OK imported : "+categories.size();
+            return "OK imported categories: "+categories.size() +" products : "+ products.size();
         }
         else{
-            return "Import file not found.";  
+            return "ERROR";  
         }
     }
-
 }
 
 

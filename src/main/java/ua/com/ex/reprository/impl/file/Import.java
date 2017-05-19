@@ -12,13 +12,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import ua.com.ex.util.Util;
 
-public abstract class Import {
-
-
-    private static final String PATTERN_GET_TEXT_FIELDS = "\\'.*?\\'";
+public abstract class Import {    
     private static final String PATTERN_GET_ALL_FIELDS = "\\(.*?\\),|\\(.*?\\);";
-
-
     public  ArrayList<ArrayList<String>> get (String start, String end, String fileNameIn){
         ArrayList<ArrayList<String>> result = new ArrayList<>();        
         try {           
@@ -27,11 +22,14 @@ public abstract class Import {
             Matcher  mat = p.matcher(itemQueryAll);
             while (mat.find()) {
                 String itemQuery = mat.group();
-                itemQuery = itemQuery.substring(1, itemQuery.length()-1);               
+                itemQuery = itemQuery.substring(1, itemQuery.length());
+                itemQuery = itemQuery.substring(0, itemQuery.length()-2);    
+                //System.out.println(itemQuery);
                 result.add(getItem(itemQuery));
             }          
         } catch (Exception e) {
             e.printStackTrace();
+            return new ArrayList<>();
         }  
         return result;        
     }
@@ -45,7 +43,7 @@ public abstract class Import {
 
     protected  String readFile(String path, Charset encoding) {
         String result = "";        
-        ByteArrayOutputStream stream = Util.readFile(path);
+        ByteArrayOutputStream stream = Util.readExternFile(path);       
         try {
             result = stream.toString("UTF-8");
         } catch (IOException e) {               
@@ -57,25 +55,28 @@ public abstract class Import {
     protected ArrayList<String> getItem(String sourceQuery){      
         ArrayList<String> stringFieldAll = getStringFields(sourceQuery);
         sourceQuery = getWithoutStringFields(sourceQuery, stringFieldAll);
+        //System.out.println("wo : "+sourceQuery);
         ArrayList<String> numericFieldsAll = getNumericFields(sourceQuery);             
         return mapper(numericFieldsAll, stringFieldAll);
     }
 
     protected ArrayList<String> getStringFields(String sourceQuery){
         ArrayList<String> stringFieldAll = new ArrayList<>();
-        Pattern p = Pattern.compile(PATTERN_GET_TEXT_FIELDS);
+        Pattern p = getPatern();
         Matcher  mat = p.matcher(sourceQuery);
         while (mat.find()) {
-            String stringField = mat.group(); 
-            stringField = stringField.replaceAll("'", "");
+            String stringField = mat.group();           
             stringFieldAll.add(stringField);
         }
         return stringFieldAll;
     }
 
-    protected String getWithoutStringFields(String sourceQuery, ArrayList<String> stringFieldAll) {
+  
+    protected abstract Pattern getPatern(); 
+
+    protected String getWithoutStringFields(String sourceQuery, ArrayList<String> stringFieldAll) {       
         for(String current: stringFieldAll){
-            sourceQuery = sourceQuery.replace(current, "");
+            sourceQuery = sourceQuery.replace(current, ",");
         }
         return sourceQuery;
     }
@@ -86,7 +87,7 @@ public abstract class Import {
         return numericFieldsAll;
     }        
 
-    protected abstract ArrayList<String> mapper(ArrayList<String> in,  ArrayList<String> stringFieldAll);
-    protected abstract String getPrefix();    
+    protected abstract ArrayList<String> mapper(ArrayList<String> numericFieldsAll,  ArrayList<String> stringFieldAll);
+        
 
 }
