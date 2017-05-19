@@ -16,29 +16,23 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "categories")
+@Table(name = "CATEGORIES")
 public class Category {
 
-    @Id
+    @Id @Column(name = "ID")
     private Integer id;
 
-    @Column(name = "name")
+    @Column(name = "NAME")
     private String name;
 
-    @Column(name = "parent_id")
-    private int parentId;
-    
-    @Column(name = "extra",  columnDefinition = "BIT")
-    private byte extra;    
-    
-    @Column(name = "enabled",  columnDefinition = "BIT")    
-    private byte enabled;
+    @Column(name = "PARENT_ID")
+    private int parentId;    
     
     @Transient
     private String imageBase64;
     
-    @Transient
-    private int quantityOfProducts;
+    @Column(name = "PRODUCT_QUANTITY")
+    private int productQuantity;
 
     @Override
     public int hashCode() {
@@ -71,7 +65,7 @@ public class Category {
             return false;
         if (parentId != other.parentId)
             return false;
-        if (quantityOfProducts != other.quantityOfProducts)
+        if (productQuantity != other.productQuantity)
             return false;
         return true;
     }

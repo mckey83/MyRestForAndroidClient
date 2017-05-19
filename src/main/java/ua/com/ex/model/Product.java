@@ -18,19 +18,22 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "products")
+@Table(name = "PRODUCTS")
 public class Product {
-	@Id
+	@Id @Column(name = "ID")
 	private Integer id;
 
-	@Column(name = "name")
+	@Column(name = "NAME")
 	private String name;
 
-	@Column(name = "price")
+	@Column(name = "PRICE")
 	private BigDecimal price;
 
-	@Column(name = "category_id")
+	@Column(name = "PARENT_CATEGORY")
 	private int categoryId;
+	
+	@Column(name = "QUANTITY")
+    private int quantity;
 
 	@Transient
 	private String imageBase64;

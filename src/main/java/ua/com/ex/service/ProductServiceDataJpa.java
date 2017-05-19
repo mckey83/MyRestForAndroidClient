@@ -8,24 +8,24 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import ua.com.ex.model.Product;
-import ua.com.ex.reprository.ImageReprository;
-import ua.com.ex.reprository.ProductReprository;
+import ua.com.ex.reprository.ImageRepository;
+import ua.com.ex.reprository.ProductRepository;
 
 @Service("productyService")
 public class ProductServiceDataJpa implements ProductService {
 
 	@Autowired
-	ProductReprository productReprository;
+	ProductRepository productRepository;
 
 	@Autowired
-	ImageReprository imageReprository;
+	ImageRepository imageRepository;
 
 	private int pageIndex = 0;
 
 	@Override
 	public List<Product> getProducts() {
 		List<Product> result = new ArrayList<>();
-		Iterable<Product> pageWithProduct = productReprository.findAll(gotoPage(pageIndex++, 10));
+		Iterable<Product> pageWithProduct = productRepository.findAll(gotoPage(pageIndex++, 10));
 		for (Product current : pageWithProduct) {
 			result.add(current);
 		}
@@ -37,16 +37,16 @@ public class ProductServiceDataJpa implements ProductService {
 
 	@Override
 	public Product getProductById(int id) {
-		Product result = productReprository.findOne(id);
-		result.setImageBase64(imageReprository.getProductImageById(id));
+		Product result = productRepository.findOne(id);
+		result.setImageBase64(imageRepository.getProductImageById(id));
 		return result;
 	}
 
 	@Override
 	public List<Product> getProductByCategoryId(int id, int page, int itemQuantity) {
-		List<Product> result = productReprository.findProductByCategoryId(gotoPage(page, itemQuantity), id);
+		List<Product> result = productRepository.findProductByCategoryId(gotoPage(page, itemQuantity), id);
 		for (Product current : result) {
-			current.setImageBase64(imageReprository.getProductImageById(id));
+			current.setImageBase64(imageRepository.getProductImageById(id));
 		}		
 		return result;
 	}

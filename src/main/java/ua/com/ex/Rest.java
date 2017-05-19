@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication(scanBasePackages = { "ua.com.ex" })
 public class Rest {
 
-	public static void main(String[] args) {
-		SpringApplication.run(Rest.class, args);
+	public static void main(String[] args) { 	    
+	    SpringApplication.run(Rest.class, args);	           
 	}
 
 }

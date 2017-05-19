@@ -7,52 +7,46 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ua.com.ex.model.Category;
-import ua.com.ex.reprository.CategoryReprository;
-import ua.com.ex.reprository.ImageReprository;
+import ua.com.ex.reprository.CategoryRepository;
+import ua.com.ex.reprository.ImageRepository;
 
 @Service("categoryService")
 public class CategoryServiceDataJpa implements CategoryService {
 
 	@Autowired
-	CategoryReprository categoryReprository;
+	CategoryRepository categoryRepository;
 	
 	@Autowired
-    ImageReprository imageReprository;
+    ImageRepository imageRepository;
 
 	@Override
 	public Category getCategoryById(int id) {	   	    
-		return prepareForSend(categoryReprository.findOne(id)); 
+		return prepareForSend(categoryRepository.findOne(id)); 
 	}
 
 	@Override
 	public List<Category> getAll() {
-		return categoryReprository.findAll();
+		return categoryRepository.findAll();
 	}
 	
 	public List<Category> getCategoryByParentId(int categoryByParentId){	    
-	    List<Category>  source = categoryReprository.getCategoryByParentId(categoryByParentId);		   
+	    List<Category>  source = categoryRepository.getCategoryByParentId(categoryByParentId);		   
 	    List<Category> result = new ArrayList<>();
-	    for (Category current : source) {	       
-            if(isNeed(current)){                
-                result.add(prepareForSend(current));
-            }  
+	    for (Category current : source) {                        
+                result.add(prepareForSend(current));          
         }    
-        return result;	    
+        return result;    
 	}
-
-	private boolean isNeed(Category current){
-        return current.getExtra()==0 && current.getEnabled()==1;	    
-    }
+	
 	
     private Category prepareForSend(Category current) {
-        String image = imageReprository.getCategoryImageById(current.getId());
+        String image = imageRepository.getCategoryImageById(current.getId());
         if (!image.isEmpty()) {
             current.setImageBase64(image);
         }
         else {
             current.setImageBase64("null");
-        }
-        current.setQuantityOfProducts(categoryReprository.findProductQuantityByCategoryId(current.getId()));
+        }       
         return current;
     }
 	
