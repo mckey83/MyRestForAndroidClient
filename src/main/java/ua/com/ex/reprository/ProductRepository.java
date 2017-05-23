@@ -9,7 +9,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import ua.com.ex.model.Product;
 
 public interface ProductRepository extends PagingAndSortingRepository<Product, Integer> {
-	@Query("FROM Product p WHERE p.categoryId = ?1")
+	@Query("FROM Product p WHERE p.categoryId = ?1 ORDER BY p.name")
 	List<Product> findProductByCategoryId(Pageable page, int categoryId);
 	
 	

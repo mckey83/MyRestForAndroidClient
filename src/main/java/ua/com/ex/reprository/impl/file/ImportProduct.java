@@ -6,8 +6,8 @@ public class ImportProduct extends Import{
 
     private static final int COLUMN_ID = 0;
     private static final int COLUMN_PARENT_CATEGORY_ID = 3;
-    private static final int COLUMN_PRICE = 17;
-    private static final int COLUMN_QUANTITY = 22;
+    private static final int COLUMN_PRICE = 13;
+    private static final int COLUMN_QUANTITY = 18;
     
     private static final String PATTERN_GET_TEXT_FIELDS = "\\,'.*?\\'";
 
@@ -20,10 +20,11 @@ public class ImportProduct extends Import{
 
         String name =  stringFieldAll.get(1);
     //    System.out.print(name+" ");
+        name = name.substring(2, name.length()-1);
         out.add(name);
 
         String price = in.get(COLUMN_PRICE);
-    //    System.out.print(price+" ");
+        System.out.println(price+" ");
         out.add(price);
 
         String quantity = in.get(COLUMN_QUANTITY);
@@ -31,7 +32,7 @@ public class ImportProduct extends Import{
         out.add(quantity);
 
         String parentcategory = in.get(COLUMN_PARENT_CATEGORY_ID);
-    //    System.out.print(parentcategory+"\n");
+   //    System.out.print(parentcategory+"\n");
         out.add(parentcategory);
         return out;
     }

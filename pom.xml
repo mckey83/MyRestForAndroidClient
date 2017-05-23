@@ -21,6 +21,14 @@
 		<joinfaces.version>2.3.6</joinfaces.version>
 		<all-themes.version>1.0.10</all-themes.version>
 	</properties>
+    
+    <repositories>
+        <repository>
+            <id>prime-repo</id>
+            <name>Prime Repo</name>
+            <url>http://repository.primefaces.org</url>
+        </repository>
+    </repositories>
 
 	<dependencies>
 		<dependency>
@@ -86,6 +94,18 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.5</version>
 		</dependency>
+        
+        <!-- JoinFaces: JSF, Primefaces -->
+        <dependency>
+            <groupId>org.joinfaces</groupId>
+            <artifactId>jsf-spring-boot-starter</artifactId>
+            <version>${joinfaces.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>all-themes</artifactId>
+            <version>${all-themes.version}</version>
+        </dependency>
 
 	</dependencies>
 	<build>

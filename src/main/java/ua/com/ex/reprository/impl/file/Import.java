@@ -55,7 +55,7 @@ public abstract class Import {
     protected ArrayList<String> getItem(String sourceQuery){      
         ArrayList<String> stringFieldAll = getStringFields(sourceQuery);
         sourceQuery = getWithoutStringFields(sourceQuery, stringFieldAll);
-        //System.out.println("wo : "+sourceQuery);
+        //System.out.println("without string : "+sourceQuery);
         ArrayList<String> numericFieldsAll = getNumericFields(sourceQuery);             
         return mapper(numericFieldsAll, stringFieldAll);
     }
@@ -65,7 +65,7 @@ public abstract class Import {
         Pattern p = getPatern();
         Matcher  mat = p.matcher(sourceQuery);
         while (mat.find()) {
-            String stringField = mat.group();           
+            String stringField = mat.group();                       
             stringFieldAll.add(stringField);
         }
         return stringFieldAll;
@@ -78,6 +78,9 @@ public abstract class Import {
         for(String current: stringFieldAll){
             sourceQuery = sourceQuery.replace(current, ",");
         }
+        sourceQuery = sourceQuery.replace(",,,,", ",");
+        sourceQuery = sourceQuery.replace(",,,", ",");
+        sourceQuery = sourceQuery.replace(",,", ",");
         return sourceQuery;
     }
 

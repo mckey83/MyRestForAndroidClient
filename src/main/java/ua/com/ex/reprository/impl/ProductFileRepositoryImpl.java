@@ -25,14 +25,22 @@ public class ProductFileRepositoryImpl implements ProductFileRepository {
     }
     private Product mapperProduct(ArrayList<String> fields){
         Product result = new Product();
-        int id = (int) Integer.parseInt(fields.get(0));
-        result.setId(id);       
-        result.setName(fields.get(1));
-        result.setPrice(new BigDecimal(fields.get(2)));
-        int quantity = (int) Integer.parseInt(fields.get(3));
-        result.setQuantity(quantity);
-        int categoryId = (int) Integer.parseInt(fields.get(4));
-        result.setCategoryId(categoryId);        
+        try{
+            int id = (int) Integer.parseInt(fields.get(0));
+            result.setId(id);       
+            result.setName(fields.get(1));
+            result.setPrice(new BigDecimal(fields.get(2)));
+            int quantity = (int) Integer.parseInt(fields.get(3));
+            result.setQuantity(quantity);
+            int categoryId = (int) Integer.parseInt(fields.get(4));
+            result.setCategoryId(categoryId); 
+        }catch(Exception e){
+            System.out.println("========"+(int) Integer.parseInt(fields.get(0))+fields.get(1)+"==========");
+            for(String current:fields) {
+                System.out.println(current);
+            }
+            System.out.print("============\n");
+        }
         return result;        
     }
 }

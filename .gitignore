@@ -1,4 +1,6 @@
-target/
+/target/*
+/src/main/resources/images/*
+/.settings/*
 
 /.classpath
 /.factorypath

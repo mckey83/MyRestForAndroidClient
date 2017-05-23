@@ -56,17 +56,23 @@ public class CommandController {
     }
 
     @GetMapping("/import")
-    public String importData() {        
+    public String importData() {         
         List<Category> categories = categoryFileRepository.getAll();
         List<Product> products = productFileRepository.getAll();
+
         if (!categories.isEmpty() && !products.isEmpty()){
-            for(Category current: categories){
-                categoryRepository.save(current);
-            } 
+            String result = "";
             for(Product current: products){
-                productRepository.save(current);
-            }           
-            return "OK imported categories: "+categories.size() +" products : "+ products.size();
+              //  productRepository.save(current);
+                result+=current.getId()+" "+current.getName()+" "+current.getPrice()+" "+current.getQuantity()+" "+current.getCategoryId()+"<br/>";                        
+            }  
+            for(Category current: categories){
+            //    int productQuantity = categoryRepository.findProductQuantityByCategoryId(current.getId());
+               // current.setProductQuantity(productQuantity);
+               // categoryRepository.save(current);
+            } 
+
+            return "OK imported categories: "+categories.size() +" products : "+ products.size()+result;
         }
         else{
             return "ERROR";  
