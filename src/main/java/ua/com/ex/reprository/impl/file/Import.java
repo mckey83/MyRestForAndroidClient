@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,26 +11,36 @@ import org.apache.commons.lang3.StringUtils;
 
 import ua.com.ex.util.Util;
 
-public abstract class Import {    
+public class Import {    
     private static final String PATTERN_GET_ALL_FIELDS = "\\(.*?\\),|\\(.*?\\);";
-    public  ArrayList<ArrayList<String>> get (String start, String end, String fileNameIn){
+    public  ArrayList<ArrayList<String>> get (String start, String end, String fileNameIn, int size){
         ArrayList<ArrayList<String>> result = new ArrayList<>();        
         try {           
             String itemQueryAll = getItemQueryAll(start, end, fileNameIn);                        
             Pattern p = Pattern.compile(PATTERN_GET_ALL_FIELDS);
             Matcher  mat = p.matcher(itemQueryAll);
-            while (mat.find()) {
-                String itemQuery = mat.group();
-                itemQuery = itemQuery.substring(1, itemQuery.length());
-                itemQuery = itemQuery.substring(0, itemQuery.length()-2);    
-                //System.out.println(itemQuery);
-                result.add(getItem(itemQuery));
+            while (mat.find()) {                                  
+                ArrayList<String> itemQuery = getItem(mat.group());                
+                if (itemQuery.size() != size ){
+                    show(itemQuery);
+                }
+                result.add(itemQuery);
             }          
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();
         }  
         return result;        
+    }
+
+
+    private void show(ArrayList<String> ithemAsArray) {
+        int index = 0;
+        System.out.println("================ERROR==========================");
+        for (String current : ithemAsArray){
+            System.out.println(index++ +". "+current);
+        }
+        System.out.println();
     }
 
     protected String getItemQueryAll(String startMarker, String endMarker, String inputFileName) {  
@@ -52,45 +61,88 @@ public abstract class Import {
         return result;
     }    
 
-    protected ArrayList<String> getItem(String sourceQuery){      
-        ArrayList<String> stringFieldAll = getStringFields(sourceQuery);
-        sourceQuery = getWithoutStringFields(sourceQuery, stringFieldAll);
-        //System.out.println("without string : "+sourceQuery);
-        ArrayList<String> numericFieldsAll = getNumericFields(sourceQuery);             
-        return mapper(numericFieldsAll, stringFieldAll);
-    }
-
-    protected ArrayList<String> getStringFields(String sourceQuery){
-        ArrayList<String> stringFieldAll = new ArrayList<>();
-        Pattern p = getPatern();
-        Matcher  mat = p.matcher(sourceQuery);
-        while (mat.find()) {
-            String stringField = mat.group();                       
-            stringFieldAll.add(stringField);
+    protected ArrayList<String> getItem(String sourceQuery){ 
+        sourceQuery = sourceQuery.substring(1, sourceQuery.length());
+        sourceQuery = sourceQuery.substring(0, sourceQuery.length()-2); 
+        ArrayList<String> result = new ArrayList<>();        
+        Buffer buffer = new BufferForDigit();
+        for(int i = 0; i< sourceQuery.length(); i++){
+            char current = sourceQuery.charAt(i);
+            if(buffer.isWork){
+                if (isLast(sourceQuery, i)){
+                    result.add(buffer.getResult());
+                } else {
+                    if(buffer.isDelimiter(current)){                    
+                        result.add(buffer.getResult());
+                        buffer.isWork = false;
+                    }
+                    else {                    
+                        buffer.add(current); 
+                    }
+                }
+            }
+            else{                
+                if(current!=','){
+                    buffer = getBuffer(current);                    
+                }
+            }
         }
-        return stringFieldAll;
+        return result;
     }
 
-  
-    protected abstract Pattern getPatern(); 
+    private boolean isLast(String sourceQuery, int i) {
+        return i == sourceQuery.length()-1;
+    }
 
-    protected String getWithoutStringFields(String sourceQuery, ArrayList<String> stringFieldAll) {       
-        for(String current: stringFieldAll){
-            sourceQuery = sourceQuery.replace(current, ",");
+    private abstract class Buffer{
+        public String buffer ="";
+        public boolean isWork = true;
+        public abstract boolean isDelimiter(char current);
+
+        public void add(char current){
+            buffer+= current;
         }
-        sourceQuery = sourceQuery.replace(",,,,", ",");
-        sourceQuery = sourceQuery.replace(",,,", ",");
-        sourceQuery = sourceQuery.replace(",,", ",");
-        return sourceQuery;
+
+        public String getResult(){
+            return buffer;
+        }
     }
 
-    protected ArrayList<String> getNumericFields(String sourceQuery) {
-        String[] splited = sourceQuery.split(",");        
-        ArrayList<String> numericFieldsAll = new ArrayList<>(Arrays.asList(splited));
-        return numericFieldsAll;
-    }        
+    private class BufferForDigit extends Buffer{
+        @Override
+        public boolean isDelimiter(char current) {           
+            return current==',';
+        }
+    }
 
-    protected abstract ArrayList<String> mapper(ArrayList<String> numericFieldsAll,  ArrayList<String> stringFieldAll);
-        
+    private class BufferForNull extends Buffer{
+        @Override
+        public boolean isDelimiter(char current) {            
+            return current ==',';
+        }
+    }
+
+    private class BufferForText extends Buffer{
+        @Override
+        public boolean isDelimiter(char current) {            
+            return current =='\'';
+        }
+    }
+
+    private Buffer getBuffer(char current){        
+        if (Character.isDigit(current)){
+            BufferForDigit buffer = new BufferForDigit();
+            buffer.add(current);            
+            return buffer;
+        }
+        if (current =='\''){            
+            return new BufferForText();
+        }
+        else {           
+            BufferForNull buffer = new BufferForNull();
+            buffer.add(current);
+            return buffer;
+        }
+    }
 
 }

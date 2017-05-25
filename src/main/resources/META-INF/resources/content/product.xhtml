@@ -1,0 +1,25 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:dataTable id="table" var="product"
+		value="#{productPFController.list}" widgetVar="carsTable"
+		selectionMode="single" selection="#{productPFController.selected}"
+		rowKey="#{product.id}">
+
+
+
+		<p:column id="table_id" headerText="id" style="width:70px;">#{product.id}</p:column>
+		
+		<p:column id="table_name" headerText="name">#{product.name}</p:column>
+		
+		
+		<p:column id="table_color" headerText="color" style="width:200px;">#{product.color}</p:column>
+		<p:column id="table_size" headerText="size" style="width:150px;">#{product.size}</p:column>
+		<p:column id="table_price" headerText="price" style="width:70px;">#{product.price}</p:column>
+		<p:column id="table_quantity" headerText="quantity"
+			style="width:70px;">#{product.quantity}</p:column>
+	</p:dataTable>
+</ui:composition>

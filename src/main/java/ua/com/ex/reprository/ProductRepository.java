@@ -3,14 +3,18 @@ package ua.com.ex.reprository;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.PagingAndSortingRepository;
 
 import ua.com.ex.model.Product;
 
-public interface ProductRepository extends PagingAndSortingRepository<Product, Integer> {
+public interface ProductRepository extends JpaRepository<Product, Integer>, JpaSpecificationExecutor<Product> {
 	@Query("FROM Product p WHERE p.categoryId = ?1 ORDER BY p.name")
-	List<Product> findProductByCategoryId(Pageable page, int categoryId);
+	List<Product> findProductByCategoryIdPagination(Pageable page, int categoryId);
+	
+	@Query("FROM Product p WHERE p.categoryId = ?1 ORDER BY p.name")
+    List<Product> findProductByCategoryId(int categoryId);
 	
 	
 }

@@ -3,29 +3,90 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
 
 <f:view contentType="text/html">
-<h:head>
-    <title>Service Accounting</title>
-    <!--<h:outputStylesheet name="style.css" library="" />-->
-    <h:outputScript name="jquery/jquery.js" library="primefaces" />
-    <ui:insert name="head" />
+	<h:head>
+		<!--<h:outputStylesheet name="style.css" library="" />-->
+		<h:outputScript name="jquery/jquery.js" library="primefaces" />
+		<ui:insert name="head" />
+		
+		<style>
+		
+.ui-panel {
+	border: none;
+}
 
-</h:head>
+.ui-panel, .ui-panel-content {
+	padding: 0;
+}
 
-<h:body>
-    <p:layout fullPage="true">
+.ui-widget, .ui-widget {
+font-size: 1.0em!important;
+}
 
-        <p:layoutUnit position="center" size="200" header="Menu" resizable="true" collapsible="true">
-            
-        </p:layoutUnit>
+.ui-panel-content, .ui-widget-content {
+padding: 0!important;
+}
 
-        
-    </p:layout>
-</h:body>
+.ui-datatable, .thead, th, .ui-datatable, .tbody, .td, .ui-datatable, .tfoot, .td, .ui-datatable, .tfoot, .th { 
+padding: 2px 5px!important;
+}
+
+.ui-layout-unit-header{
+    padding: .4em .2em .2em .2em!important;
+}
+
+.ui-panelmenu, .ui-panelmenu-header, a {
+    display: block;
+    padding: .2em .2em .2em .2em!important;
+}
+
+.ui-icon {
+    width: 13px;
+    height: 13px;
+    }
+</style>
+
+	</h:head>
+
+	<h:body>
+
+		<p:layout fullPage="true">
+			<p:layoutUnit position="north" header="server" resizable="true"
+				collapsible="true">
+				<h:form id="north">
+					<p:commandButton value="update"
+						actionListener="#{remoteDataPFController.update}" update="@form:north" />
+					<h:outputText value="#{remoteDataPFController.categories}" />
+					<h:outputText value="#{remoteDataPFController.products}" />
+					<h:outputText value="#{remoteDataPFController.time}" />
+				</h:form>
+			</p:layoutUnit>
+
+			<p:layoutUnit id="west" position="west" header="catalog"
+				resizable="true" collapsible="true">
+				<h:form id="catalog">
+					<p:panelMenu model="#{catalogPFController.model}" />
+				</h:form>
+			</p:layoutUnit>
+
+			<p:layoutUnit position="center">
+				<p:panel id="optionPanel" styleClass="ui-panelgrid">
+					<p:panel rendered="#{catalogPFController.rend}">
+						<ui:insert>
+							<ui:include src="/content/product.xhtml" />
+						</ui:insert>
+					</p:panel>
+				</p:panel>
+			</p:layoutUnit>
+
+		</p:layout>
+	</h:body>
 </f:view>
 </html>

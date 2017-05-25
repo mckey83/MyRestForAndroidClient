@@ -43,8 +43,8 @@ public class ProductServiceDataJpa implements ProductService {
 	}
 
 	@Override
-	public List<Product> getProductByCategoryId(int id, int page, int itemQuantity) {
-		List<Product> result = productRepository.findProductByCategoryId(gotoPage(page, itemQuantity), id);
+	public List<Product> getProductByCategoryIdPaging(int id, int page, int itemQuantity) {
+		List<Product> result = productRepository.findProductByCategoryIdPagination(gotoPage(page, itemQuantity), id);
 		for (Product current : result) {
 			current.setImageBase64(imageRepository.getProductImageById(id));
 		}		
@@ -55,5 +55,14 @@ public class ProductServiceDataJpa implements ProductService {
 		PageRequest request = new PageRequest(page, itemQuantity);
 		return request;
 	}
+
+    @Override
+    public List<Product> getProductByCategoryId(int id) {
+        List<Product> result = productRepository.findProductByCategoryId(id);
+        for (Product current : result) {
+            current.setImageBase64(imageRepository.getProductImageById(id));
+        }       
+        return result;
+    }
 
 }

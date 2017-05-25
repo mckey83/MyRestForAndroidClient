@@ -29,6 +29,6 @@ public class ProductController {
 
 	@GetMapping("/{id}/category/{page}/page/{itemquantity}")
 	public List<Product> getProductByCategoryId(@PathVariable("id") int id, @PathVariable("page") int page, @PathVariable("itemquantity") int itemQuantity) {
-		return productService.getProductByCategoryId(id ,page, itemQuantity); 
+		return productService.getProductByCategoryIdPaging(id ,page, itemQuantity); 
 	}
 }

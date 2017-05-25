@@ -1,5 +1,6 @@
 package ua.com.ex.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
@@ -15,36 +16,48 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "PRODUCTS")
-public class Product {
-	@Id @Column(name = "ID")
-	private Integer id;
+public class Product implements Serializable{
 
-	@Column(name = "NAME")
-	private String name;
+    private static final long serialVersionUID = 1L;
 
-	@Column(name = "PRICE")
-	private BigDecimal price;
+    @Id @Column(name = "ID")
+    private int id;	
 
-	@Column(name = "PARENT_CATEGORY")
-	private int categoryId;
-	
-	@Column(name = "QUANTITY")
+    @Column(name = "NAME")
+    private String name;
+
+    @Column(name = "PRICE")
+    private BigDecimal price;
+
+    @Column(name = "DISCOUNT")
+    private int discount;		
+
+    @Column(name = "PARENT_CATEGORY")
+    private int categoryId;
+
+    @Column(name = "QUANTITY")
     private int quantity;
 
-	@Transient
-	private String imageBase64;
+    @Column(name = "COLOR")
+    private String color;
 
-	@Transient
+    @Column(name = "SIZE")
+    private String size;
+
+    @Transient
+    private String imageBase64;
+
+    @Transient
     @Override
-    public int hashCode() {
-        return (id == null) ? 0 : id.hashCode();
+    public int hashCode() {       
+        return id + 31;
     }
 
-	@Transient
+    @Transient
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -56,10 +69,9 @@ public class Product {
         Product other = (Product) obj;
         if (categoryId != other.categoryId)
             return false;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
+        if (discount != other.discount)
+            return false;
+        if (id != other.id)
             return false;
         if (imageBase64 == null) {
             if (other.imageBase64 != null)
@@ -76,8 +88,10 @@ public class Product {
                 return false;
         } else if (!price.equals(other.price))
             return false;
+        if (quantity != other.quantity)
+            return false;
         return true;
-    } 
-	
+    }
+
 
 }
