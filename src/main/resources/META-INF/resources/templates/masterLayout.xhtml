@@ -3,29 +3,46 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
 <f:view contentType="text/html">
-<h:head>
-    <title>Service Accounting</title>
-    <!--<h:outputStylesheet name="style.css" library="" />-->
-    <h:outputScript name="jquery/jquery.js" library="primefaces" />
-    <ui:insert name="head" />
+	<h:head>
+		<title>Service Accounting</title>
+		<!--<h:outputStylesheet name="style.css" library="" />-->
+		<h:outputScript name="jquery/jquery.js" library="primefaces" />
+		<ui:insert name="head" />
 
-</h:head>
+	</h:head>
 
-<h:body>
-    <p:layout fullPage="true">
+	<h:body>
+		<p:layout fullPage="true">
+			<p:layoutUnit position="north" header="Server" resizable="true"
+				collapsible="true">
+				<h:form id="north">
+					<p:commandButton value="update"
+						actionListener="#{mainPFController.update}" update="@form:north" />
+					<h:outputText value="#{mainPFController.categories}" />
+					<h:outputText value="#{mainPFController.products}" />
+					<h:outputText value="#{mainPFController.time}" />
 
-        <p:layoutUnit position="center" size="200" header="Menu" resizable="true" collapsible="true">
-            
-        </p:layoutUnit>
+				</h:form>
+			</p:layoutUnit>
 
-        
-    </p:layout>
-</h:body>
+			<p:layoutUnit id="content" position="center">
+				<h:form id="catalog">
+					<h3>Programmatic Menu</h3>
+					
+				</h:form>
+				<ui:insert name="content">
+					<h:form id="contentForm">
+						<ui:include src="#{contentPFController.content}" />
+					</h:form>
+				</ui:insert>
+			</p:layoutUnit>
+		</p:layout>
+	</h:body>
 </f:view>
 </html>

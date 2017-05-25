@@ -1,5 +1,7 @@
 package ua.com.ex.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -17,10 +19,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "CATEGORIES")
-public class Category {
+public class Category implements Serializable{
+
+    private static final long serialVersionUID = 1L;
 
     @Id @Column(name = "ID")
-    private Integer id;
+    private int id;
 
     @Column(name = "NAME")
     private String name;
@@ -34,11 +38,13 @@ public class Category {
     @Column(name = "PRODUCT_QUANTITY")
     private int productQuantity;
 
+    @Transient
     @Override
-    public int hashCode() {
-        return (id == null) ? 0 : id.hashCode();
+    public int hashCode() {      
+        return id + 31;
     }
-
+    
+    @Transient
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -48,10 +54,7 @@ public class Category {
         if (getClass() != obj.getClass())
             return false;
         Category other = (Category) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
+        if (id != other.id)
             return false;
         if (imageBase64 == null) {
             if (other.imageBase64 != null)
@@ -69,6 +72,9 @@ public class Category {
             return false;
         return true;
     }
+
+    
+   
 
 
 

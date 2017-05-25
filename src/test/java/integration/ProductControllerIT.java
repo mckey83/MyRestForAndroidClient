@@ -59,7 +59,7 @@ public class ProductControllerIT {
         String url = path + categoryId + "/category/" + page + "/page/" + itemQuantity;
         ResponseEntity<Product[]> responseEntity = restTemplate.getForEntity(url,  Product[].class);
         List <Product> actual= new ArrayList<Product>(Arrays.asList(responseEntity.getBody()));
-        List <Product> expected = productService.getProductByCategoryId(categoryId, page, itemQuantity);
+        List <Product> expected = productService.getProductByCategoryIdPaging(categoryId, page, itemQuantity);
         assertEquals(expected, actual);        
     }
 

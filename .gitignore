@@ -5,3 +5,9 @@
 /.classpath
 /.factorypath
 /.project
+/localexbase.sql
+/localexbase.sql.gz
+/testdb.lck
+/testdb.log
+/testdb.properties
+/testdb.script
