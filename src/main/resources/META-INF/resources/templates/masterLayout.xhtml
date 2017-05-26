@@ -7,95 +7,61 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-<<<<<<< HEAD
 
-
-=======
->>>>>>> refs/heads/dev
 
 <f:view contentType="text/html">
 	<h:head>
-<<<<<<< HEAD
 		<!--<h:outputStylesheet name="style.css" library="" />-->
 		<h:outputScript name="jquery/jquery.js" library="primefaces" />
 		<ui:insert name="head" />
 		
 		<style>
-		
-.ui-panel {
-	border: none;
-}
-=======
-		<title>Service Accounting</title>
-		<!--<h:outputStylesheet name="style.css" library="" />-->
-		<h:outputScript name="jquery/jquery.js" library="primefaces" />
-		<ui:insert name="head" />
->>>>>>> refs/heads/dev
-
-<<<<<<< HEAD
-.ui-panel, .ui-panel-content {
-	padding: 0;
-}
-=======
-	</h:head>
->>>>>>> refs/heads/dev
-
-<<<<<<< HEAD
-.ui-widget, .ui-widget {
-font-size: 1.0em!important;
-}
-=======
-	<h:body>
-		<p:layout fullPage="true">
-			<p:layoutUnit position="north" header="Server" resizable="true"
-				collapsible="true">
-				<h:form id="north">
-					<p:commandButton value="update"
-						actionListener="#{mainPFController.update}" update="@form:north" />
-					<h:outputText value="#{mainPFController.categories}" />
-					<h:outputText value="#{mainPFController.products}" />
-					<h:outputText value="#{mainPFController.time}" />
->>>>>>> refs/heads/dev
-
-<<<<<<< HEAD
-.ui-panel-content, .ui-widget-content {
-padding: 0!important;
-}
-=======
-				</h:form>
-			</p:layoutUnit>
->>>>>>> refs/heads/dev
-
-<<<<<<< HEAD
-.ui-datatable, .thead, th, .ui-datatable, .tbody, .td, .ui-datatable, .tfoot, .td, .ui-datatable, .tfoot, .th { 
-padding: 2px 5px!important;
+.ui-panelgrid {
+	border: 0px !important;
+	padding: 0em !important;
 }
 
-.ui-layout-unit-header{
-    padding: .4em .2em .2em .2em!important;
+.ui-corner-all {
+	border-radius: 0px !important;
+}
+
+.ui-widget {
+	font-size: 1.0em !important;
+}
+
+.ui-datatable, .thead, th, .ui-datatable, .tbody, .td, .ui-datatable,
+	.tfoot, .td, .ui-datatable, .tfoot, .th {
+	padding: 2px 5px !important;
+}
+
+.ui-layout-unit-header {
+	padding: .4em .2em .2em .2em !important;
 }
 
 .ui-panelmenu, .ui-panelmenu-header, a {
-    display: block;
-    padding: .2em .2em .2em .2em!important;
+	display: block;
+	padding: .2em .2em .2em .2em !important;
+}
+
+.ui-panel, .ui-panel-content{
+padding: 0px !important;
 }
 
 .ui-icon {
-    width: 13px;
-    height: 13px;
-    }
+	width: 13px;
+	height: 13px;
+}
 </style>
 
 	</h:head>
-
 	<h:body>
-
 		<p:layout fullPage="true">
 			<p:layoutUnit position="north" header="server" resizable="true"
 				collapsible="true">
 				<h:form id="north">
 					<p:commandButton value="update"
-						actionListener="#{remoteDataPFController.update}" update="@form:north" />
+						actionListener="#{remoteDataPFController.update}"
+						update="@form:north" />
 					<h:outputText value="#{remoteDataPFController.categories}" />
 					<h:outputText value="#{remoteDataPFController.products}" />
 					<h:outputText value="#{remoteDataPFController.time}" />
@@ -111,27 +77,13 @@ padding: 2px 5px!important;
 
 			<p:layoutUnit position="center">
 				<p:panel id="optionPanel" styleClass="ui-panelgrid">
-					<p:panel rendered="#{catalogPFController.rend}">
+					<p:panel rendered="#{catalogPFController.rend}" styleClass="ui-panelgrid">
 						<ui:insert>
 							<ui:include src="/content/product.xhtml" />
 						</ui:insert>
 					</p:panel>
 				</p:panel>
 			</p:layoutUnit>
-
-=======
-			<p:layoutUnit id="content" position="center">
-				<h:form id="catalog">
-					<h3>Programmatic Menu</h3>
-					
-				</h:form>
-				<ui:insert name="content">
-					<h:form id="contentForm">
-						<ui:include src="#{contentPFController.content}" />
-					</h:form>
-				</ui:insert>
-			</p:layoutUnit>
->>>>>>> refs/heads/dev
 		</p:layout>
 	</h:body>
 </f:view>
