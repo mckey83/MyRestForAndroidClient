@@ -14,10 +14,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 @Entity
 @Table(name = "PRODUCTS")
 public class Product implements Serializable{
@@ -25,7 +28,7 @@ public class Product implements Serializable{
     private static final long serialVersionUID = 1L;
 
     @Id @Column(name = "ID")
-    private int id;	
+	private int id;	
 
     @Column(name = "NAME")
     private String name;
@@ -92,6 +95,5 @@ public class Product implements Serializable{
             return false;
         return true;
     }
-
 
 }

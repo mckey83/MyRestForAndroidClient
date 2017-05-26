@@ -57,8 +57,7 @@ public class ProductFileRepositoryImpl implements ProductFileRepository {
             result.setQuantity(quantity);
             int categoryId = (int) Integer.parseInt(fields.get(COLUMN_CATEGORY_ID));
             result.setCategoryId(categoryId);            
-            String size = fields.get(COLUMN_SIZE);
-            
+            String size = fields.get(COLUMN_SIZE);            
             if(!size.equals("NULL")){
                 result.setSize(size);
             }else{
@@ -70,6 +69,8 @@ public class ProductFileRepositoryImpl implements ProductFileRepository {
             } else{
                 result.setColor("");
             }
+            result.setCategoryId(categoryId); 
+
         }catch(Exception e){
             e.printStackTrace();
         }

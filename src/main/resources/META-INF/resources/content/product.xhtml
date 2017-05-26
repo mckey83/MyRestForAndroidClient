@@ -4,6 +4,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
+<<<<<<< HEAD
 	<p:dataTable id="table" var="product"
 		value="#{productPFController.list}" widgetVar="carsTable"
 		selectionMode="single" selection="#{productPFController.selected}"
@@ -22,4 +23,21 @@
 		<p:column id="table_quantity" headerText="quantity"
 			style="width:70px;">#{product.quantity}</p:column>
 	</p:dataTable>
+=======
+
+	<p:commandButton value="back"
+                        action="#{productPFController.back()}"
+                        update="@form:contentForm" />
+	
+
+	<p:dataTable var="product" value="#{productPFController.list}"
+		selectionMode="single" selection="#{productPFController.selected}"
+		rowKey="#{product.id}">
+		<p:column headerText="id">#{product.id}</p:column>
+		<p:column headerText="name">#{product.name}</p:column>
+		<p:column headerText="price">#{product.price}</p:column>
+		<p:column headerText="quantity">#{product.quantity}</p:column>
+	</p:dataTable>
+
+>>>>>>> refs/heads/dev
 </ui:composition>

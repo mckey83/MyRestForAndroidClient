@@ -40,4 +40,5 @@ public class ProductPFController implements Serializable{
     public void update(int  parentId){        
         list = productService.getProductByCategoryId(parentId);
     } 
+
 }
