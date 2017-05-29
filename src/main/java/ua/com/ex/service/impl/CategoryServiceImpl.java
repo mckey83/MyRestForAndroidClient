@@ -1,4 +1,4 @@
-package ua.com.ex.service;
+package ua.com.ex.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,11 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ua.com.ex.model.Category;
-import ua.com.ex.reprository.CategoryRepository;
-import ua.com.ex.reprository.ImageRepository;
+import ua.com.ex.reprository.interfaces.CategoryRepository;
+import ua.com.ex.reprository.interfaces.ImageRepository;
+import ua.com.ex.service.interfaces.CategoryService;
 
 @Service("categoryService")
-public class CategoryServiceDataJpa implements CategoryService {
+public class CategoryServiceImpl implements CategoryService {
 
 	@Autowired
 	CategoryRepository categoryRepository;
@@ -49,6 +50,8 @@ public class CategoryServiceDataJpa implements CategoryService {
         }       
         return current;
     }
+    
+    
 	
 	
 }

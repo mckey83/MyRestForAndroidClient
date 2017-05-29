@@ -16,9 +16,14 @@
 		<ui:insert name="head" />
 		
 		<style>
-.ui-panelgrid {
+		
+.ui-panelgrid  {
 	border: 0px !important;
 	padding: 0em !important;
+}
+
+.ui-layout-pane-center{
+padding: 0!important;
 }
 
 .ui-corner-all {
@@ -47,6 +52,10 @@
 padding: 0px !important;
 }
 
+.ui-layoutUnitCenter{
+padding: 0px !important;
+}
+
 .ui-icon {
 	width: 13px;
 	height: 13px;
@@ -62,9 +71,7 @@ padding: 0px !important;
 					<p:commandButton value="update"
 						actionListener="#{remoteDataPFController.update}"
 						update="@form:north" />
-					<h:outputText value="#{remoteDataPFController.categories}" />
-					<h:outputText value="#{remoteDataPFController.products}" />
-					<h:outputText value="#{remoteDataPFController.time}" />
+					<h:outputText value="#{remoteDataPFController.databaseDetails}" />				
 				</h:form>
 			</p:layoutUnit>
 
@@ -75,7 +82,7 @@ padding: 0px !important;
 				</h:form>
 			</p:layoutUnit>
 
-			<p:layoutUnit position="center">
+			<p:layoutUnit id = "layoutUnitCenter"  styleClass="ui-layoutUnitCenter" position="center">
 				<p:panel id="optionPanel" styleClass="ui-panelgrid">
 					<p:panel rendered="#{catalogPFController.rend}" styleClass="ui-panelgrid">
 						<ui:insert>

@@ -1,4 +1,4 @@
-package ua.com.ex.service;
+package ua.com.ex.service.interfaces;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package ua.com.ex.controller;
+package ua.com.ex.controller.rest;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ua.com.ex.model.Product;
-import ua.com.ex.service.ProductService;
+import ua.com.ex.service.interfaces.ProductService;
 
 @RestController
 @RequestMapping("/product")

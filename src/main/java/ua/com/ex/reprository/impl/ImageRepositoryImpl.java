@@ -3,25 +3,29 @@ package ua.com.ex.reprository.impl;
 import java.io.ByteArrayOutputStream;
 
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import ua.com.ex.reprository.ImageRepository;
-import ua.com.ex.util.Util;
+import ua.com.ex.reprository.interfaces.ImageRepository;
+import ua.com.ex.tools.FileOperation;
 
 @Repository("imageRepository")
 public class ImageRepositoryImpl implements ImageRepository {
 
     private static final String DEFAULT_IMAGE = "/images/ex.png";
+    
+    @Autowired
+    private FileOperation  fileOperation;
 
     @Override
     public String getProductImageById(int productId) {
         String result = "";
         try {
             String path = "/images/products/thumb_"+ productId + ".png";            
-            ByteArrayOutputStream stream = Util.readFile(path);
+            ByteArrayOutputStream stream = fileOperation.readFile(path);
             result = Base64.encodeBase64String(stream.toByteArray());
             if(result.isEmpty() ) {
-                stream = Util.readFile(DEFAULT_IMAGE);
+                stream = fileOperation.readFile(DEFAULT_IMAGE);
                 result = Base64.encodeBase64String(stream.toByteArray());
             }            
         } catch (Exception e) {
@@ -35,10 +39,10 @@ public class ImageRepositoryImpl implements ImageRepository {
         String result = "";
         try {
             String path = "/images/categories/cat_"+ categoryId + ".png";            
-            ByteArrayOutputStream stream = Util.readFile(path);
+            ByteArrayOutputStream stream = fileOperation.readFile(path);
             result = Base64.encodeBase64String(stream.toByteArray());
             if(result.isEmpty() ) {
-                stream = Util.readFile(DEFAULT_IMAGE);
+                stream = fileOperation.readFile(DEFAULT_IMAGE);
                 result = Base64.encodeBase64String(stream.toByteArray());
             }            
         } catch (Exception e) {

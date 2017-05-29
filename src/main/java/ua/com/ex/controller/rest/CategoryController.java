@@ -1,4 +1,4 @@
-package ua.com.ex.controller;
+package ua.com.ex.controller.rest;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ua.com.ex.model.Category;
-import ua.com.ex.service.CategoryService;
+import ua.com.ex.service.interfaces.CategoryService;
 
 @RestController
 @RequestMapping("/category")

@@ -1,4 +1,4 @@
-package ua.com.ex.reprository;
+package ua.com.ex.reprository.interfaces;
 
 import java.util.List;
 

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
 import lombok.Getter;
 import lombok.Setter;
 import ua.com.ex.model.Product;
-import ua.com.ex.service.ProductService;
+import ua.com.ex.service.interfaces.ProductService;
 
 @Getter
 @Setter

@@ -18,7 +18,7 @@ import org.springframework.stereotype.Controller;
 import lombok.Getter;
 import lombok.Setter;
 import ua.com.ex.model.Category;
-import ua.com.ex.service.CategoryService;
+import ua.com.ex.service.interfaces.CategoryService;
 
 @Getter
 @Setter
@@ -44,6 +44,9 @@ public class CatalogPFController implements Serializable{
     public void init() {
         model =  new DefaultMenuModel();       
         List<Category> upCategoryAll = categoryService.getCategoryByParentId(1);
+        if (upCategoryAll.isEmpty()) {
+            return;
+        }
         for(Category upCurrent : upCategoryAll ){
             DefaultSubMenu submenu = new DefaultSubMenu(upCurrent.getName());
             submenu.setExpanded(false);            
@@ -75,7 +78,6 @@ public class CatalogPFController implements Serializable{
             rend = true;
             updateView();            
         }
-
     }
 
     public void updateView(){

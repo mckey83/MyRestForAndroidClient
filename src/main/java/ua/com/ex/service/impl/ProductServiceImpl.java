@@ -1,4 +1,4 @@
-package ua.com.ex.service;
+package ua.com.ex.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,11 +8,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import ua.com.ex.model.Product;
-import ua.com.ex.reprository.ImageRepository;
-import ua.com.ex.reprository.ProductRepository;
+import ua.com.ex.reprository.interfaces.ImageRepository;
+import ua.com.ex.reprository.interfaces.ProductRepository;
+import ua.com.ex.service.interfaces.ProductService;
 
 @Service("productyService")
-public class ProductServiceDataJpa implements ProductService {
+public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	ProductRepository productRepository;

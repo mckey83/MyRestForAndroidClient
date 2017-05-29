@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import ua.com.ex.Rest;
 import ua.com.ex.model.Category;
-import ua.com.ex.service.CategoryService;
+import ua.com.ex.service.interfaces.CategoryService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Rest.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

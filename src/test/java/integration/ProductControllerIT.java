@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import ua.com.ex.Rest;
 import ua.com.ex.model.Product;
-import ua.com.ex.service.ProductService;
+import ua.com.ex.service.interfaces.ProductService;
 
 
 @RunWith(SpringRunner.class)

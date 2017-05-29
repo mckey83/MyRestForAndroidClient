@@ -1,6 +1,5 @@
-package ua.com.ex.reprository.impl.file;
+package ua.com.ex.tools;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -8,60 +7,54 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import ua.com.ex.util.Util;
+import ua.com.ex.exception.ToolsException;
 
-public class Import {    
+
+
+public class ParserSqlFile { 
+
+    private static final Logger logger = LoggerFactory.getLogger(ParserSqlFile.class);
+
+    private FileOperation fileOperation = new FileOperationImpl();
+
     private static final String PATTERN_GET_ALL_FIELDS = "\\(.*?\\),|\\(.*?\\);";
-    public  ArrayList<ArrayList<String>> get (String start, String end, String fileNameIn, int size){
+
+    public  ArrayList<ArrayList<String>> get (String start, String end, String fileNameIn, int size) throws Exception{
         ArrayList<ArrayList<String>> result = new ArrayList<>();        
-        try {           
-            String itemQueryAll = getItemQueryAll(start, end, fileNameIn);                        
-            Pattern p = Pattern.compile(PATTERN_GET_ALL_FIELDS);
-            Matcher  mat = p.matcher(itemQueryAll);
-            while (mat.find()) {                                  
-                ArrayList<String> itemQuery = getItem(mat.group());                
-                if (itemQuery.size() != size ){
-                    show(itemQuery);
-                }
-                result.add(itemQuery);
-            }          
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }  
+
+        String itemQueryAll = getItemQueryAll(start, end, fileNameIn);                        
+        Pattern p = Pattern.compile(PATTERN_GET_ALL_FIELDS);
+        Matcher  mat = p.matcher(itemQueryAll);
+        while (mat.find()) {                                  
+            ArrayList<String> itemQuery = getItem(mat.group());                
+            if (itemQuery.size() != size ){
+                logger.error("incorrect quantity of fields");
+                throw new ToolsException("incorrect quantity of fields");
+            }
+            result.add(itemQuery);
+        }
         return result;        
     }
 
 
-    private void show(ArrayList<String> ithemAsArray) {
-        int index = 0;
-        System.out.println("================ERROR==========================");
-        for (String current : ithemAsArray){
-            System.out.println(index++ +". "+current);
-        }
-        System.out.println();
-    }
-
-    protected String getItemQueryAll(String startMarker, String endMarker, String inputFileName) {  
+    private String getItemQueryAll(String startMarker, String endMarker, String inputFileName) throws Exception {  
         String result = readFile(inputFileName, StandardCharsets.UTF_8);
         result = StringUtils.substringAfter(result, startMarker );
         result = StringUtils.substringBefore(result, endMarker);
         return result;   
     }
 
-    protected  String readFile(String path, Charset encoding) {
+    private  String readFile(String path, Charset encoding) throws Exception {
         String result = "";        
-        ByteArrayOutputStream stream = Util.readExternFile(path);       
-        try {
-            result = stream.toString("UTF-8");
-        } catch (IOException e) {               
-            e.printStackTrace();
-        }
+        ByteArrayOutputStream stream = fileOperation.readExternFile(path);  
+        result = stream.toString("UTF-8");       
         return result;
     }    
 
-    protected ArrayList<String> getItem(String sourceQuery){ 
+    private ArrayList<String> getItem(String sourceQuery){ 
         sourceQuery = sourceQuery.substring(1, sourceQuery.length());
         sourceQuery = sourceQuery.substring(0, sourceQuery.length()-2); 
         ArrayList<String> result = new ArrayList<>();        
@@ -98,7 +91,7 @@ public class Import {
         public String buffer ="";
         public boolean isWork = true;
         public abstract boolean isDelimiter(char current);
-
+        
         public void add(char current){
             buffer+= current;
         }
