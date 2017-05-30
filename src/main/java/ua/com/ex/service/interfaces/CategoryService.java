@@ -11,4 +11,8 @@ public interface CategoryService {
 	List<Category> getAll();
 	
 	List<Category> getCategoryByParentId(int categoryByParentId);
+	
+	void save (Category category);
+	
+	 int findProductQuantityByCategoryId(int categoryId);
 }

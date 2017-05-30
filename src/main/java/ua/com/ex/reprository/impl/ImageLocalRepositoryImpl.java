@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 import ua.com.ex.reprository.interfaces.ImageRepository;
 import ua.com.ex.tools.FileOperation;
 
-@Repository("imageRepository")
-public class ImageRepositoryImpl implements ImageRepository {
+@Repository("imageLocalRepository")
+public class ImageLocalRepositoryImpl implements ImageRepository {
 
     private static final String DEFAULT_IMAGE = "/images/ex.png";
     

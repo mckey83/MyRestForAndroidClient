@@ -18,7 +18,7 @@ public class Rest {
 	public static void main(String[] args) { 	    
 	    ApplicationContext app = SpringApplication.run(Rest.class, args);	    
 	     
-	     RemoteDataService myBean = app.getBean(RemoteDataServiceImpl.class);//get the bean by type
+	     RemoteDataService myBean = app.getBean(RemoteDataServiceImpl.class);
 	     try {
             myBean.updateData();
         } catch (ServiceException e) {            

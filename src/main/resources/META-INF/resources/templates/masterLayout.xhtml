@@ -14,16 +14,15 @@
 		<!--<h:outputStylesheet name="style.css" library="" />-->
 		<h:outputScript name="jquery/jquery.js" library="primefaces" />
 		<ui:insert name="head" />
-		
+
 		<style>
-		
-.ui-panelgrid  {
+.ui-panelgrid {
 	border: 0px !important;
 	padding: 0em !important;
 }
 
-.ui-layout-pane-center{
-padding: 0!important;
+.ui-layout-pane-center {
+	padding: 0 !important;
 }
 
 .ui-corner-all {
@@ -48,12 +47,12 @@ padding: 0!important;
 	padding: .2em .2em .2em .2em !important;
 }
 
-.ui-panel, .ui-panel-content{
-padding: 0px !important;
+.ui-panel, .ui-panel-content {
+	padding: 0px !important;
 }
 
-.ui-layoutUnitCenter{
-padding: 0px !important;
+.ui-layoutUnitCenter {
+	padding: 0px !important;
 }
 
 .ui-icon {
@@ -69,9 +68,11 @@ padding: 0px !important;
 				collapsible="true">
 				<h:form id="north">
 					<p:commandButton value="update"
-						actionListener="#{remoteDataPFController.update}"
-						update="@form:north" />
-					<h:outputText value="#{remoteDataPFController.databaseDetails}" />				
+						actionListener="#{commandPFController.update}"
+						update="@form:north" />							
+					<p:commandButton value="shutdown"
+                        actionListener="#{commandPFController.shutdown}"
+                        update="@form:north" />
 				</h:form>
 			</p:layoutUnit>
 
@@ -82,9 +83,11 @@ padding: 0px !important;
 				</h:form>
 			</p:layoutUnit>
 
-			<p:layoutUnit id = "layoutUnitCenter"  styleClass="ui-layoutUnitCenter" position="center">
+			<p:layoutUnit id="layoutUnitCenter" styleClass="ui-layoutUnitCenter"
+				position="center">
 				<p:panel id="optionPanel" styleClass="ui-panelgrid">
-					<p:panel rendered="#{catalogPFController.rend}" styleClass="ui-panelgrid">
+					<p:panel rendered="#{catalogPFController.rend}"
+						styleClass="ui-panelgrid">
 						<ui:insert>
 							<ui:include src="/content/product.xhtml" />
 						</ui:insert>

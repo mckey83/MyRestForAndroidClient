@@ -1,4 +1,4 @@
-package ua.com.ex.service.impl;
+package ua.com.ex.tools;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,45 +11,43 @@ import org.springframework.stereotype.Component;
 import ua.com.ex.exception.ServiceException;
 import ua.com.ex.model.Category;
 import ua.com.ex.model.mapper.CategoryMapper;
-import ua.com.ex.reprository.interfaces.CategoryRepository;
+import ua.com.ex.service.interfaces.CategoryService;
 
 
-@Component(value="remoteDataServiceCategory")
-public class RemoteDataServiceCategoryImpl extends RemoteDataServiceImpl {
+@Component(value="remoteCategoryParser")
+public class RemoteCategoryParser {
 
-    private static final Logger logger = LoggerFactory.getLogger(RemoteDataServiceCategoryImpl.class);
+    protected static SqlFileParser parser = new SqlFileParser();
+
+    private static final Logger logger = LoggerFactory.getLogger(RemoteCategoryParser.class);
 
     @Autowired
     private CategoryMapper categoryMapper;    
 
     @Autowired
-    private CategoryRepository categoryRepository;     
+    private CategoryService categoryService;    
 
     private static final int EXTRA = 17;
 
     private static final int COLUMN_CATEGORY_ENABLED = 10;
 
-    @Override
-    public void updateData() throws ServiceException {         
+    public void updateData() throws ServiceException { 
+        System.out.println("RemoteCategoryParser.updateData()");
         List<Category> categories = getCategories();       
         if (!categories.isEmpty() ){            
             for(Category current: categories){
-                int productQuantity = categoryRepository.findProductQuantityByCategoryId(current.getId());
+                int productQuantity = categoryService.findProductQuantityByCategoryId(current.getId());               
                 current.setProductQuantity(productQuantity);
-                categoryRepository.save(current);
+                categoryService.save(current);
             }            
         }       
     }   
-
+   
     private List<Category> getCategories() throws ServiceException{
         ArrayList<ArrayList<String>> categoriesAsString = new ArrayList<>();
         ArrayList<Category> result = new ArrayList<>();
         try{
-            categoriesAsString = parser.get("INSERT INTO `categories` VALUES", "*!40000 ALTER TABLE `categories` ENABLE KEYS */; ", "localexbase.sql", 33);
-            Category root = new Category();
-            root.setId(1);
-            root.setParentId(0);
-            result.add(root);
+            categoriesAsString = parser.get("INSERT INTO `categories` VALUES", "/*!40000 ALTER TABLE `categories` ENABLE KEYS */;", "localexbase.sql", 33);
             for (ArrayList<String> current: categoriesAsString){
                 if (isNeed(current)) {                
                     result.add(categoryMapper.getCategory(current));                

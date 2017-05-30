@@ -1,9 +1,9 @@
 package ua.com.ex.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -20,20 +20,11 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	ImageRepository imageRepository;
-
-	private int pageIndex = 0;
-
+	
 	@Override
-	public List<Product> getProducts() {
-		List<Product> result = new ArrayList<>();
-		Iterable<Product> pageWithProduct = productRepository.findAll(gotoPage(pageIndex++, 10));
-		for (Product current : pageWithProduct) {
-			result.add(current);
-		}
-		if (result.size() == 0) {
-			pageIndex = 0;
-		}
-		return result;
+	@Qualifier("imageLocalRepository")
+	public List<Product> getAll() {	    
+		return productRepository.findAll();
 	}
 
 	@Override
@@ -65,5 +56,5 @@ public class ProductServiceImpl implements ProductService {
         }       
         return result;
     }
-
+   
 }

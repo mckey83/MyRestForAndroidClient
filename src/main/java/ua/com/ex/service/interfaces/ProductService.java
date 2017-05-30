@@ -6,12 +6,12 @@ import ua.com.ex.model.Product;
 
 public interface ProductService {
 
-	List<Product> getProducts();
+	List<Product> getAll();
 
 	Product getProductById(int id);
 
 	List<Product> getProductByCategoryIdPaging(int id, int page, int itemQuantity);
 	
-	List<Product> getProductByCategoryId(int id);
+	List<Product> getProductByCategoryId(int id);	
 
 }

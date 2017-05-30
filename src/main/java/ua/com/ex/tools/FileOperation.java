@@ -6,7 +6,7 @@ import ua.com.ex.exception.ToolsException;
 
 public interface FileOperation {
 
-    public void cleanOldFile(String string) throws ToolsException;
+    public void cleanOldFile(String string) ;
     
     public  ByteArrayOutputStream readExternFile(String path) throws ToolsException;
     

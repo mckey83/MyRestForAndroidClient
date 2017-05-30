@@ -14,9 +14,9 @@ import ua.com.ex.exception.ToolsException;
 
 
 
-public class ParserSqlFile { 
+public class SqlFileParser { 
 
-    private static final Logger logger = LoggerFactory.getLogger(ParserSqlFile.class);
+    private static final Logger logger = LoggerFactory.getLogger(SqlFileParser.class);
 
     private FileOperation fileOperation = new FileOperationImpl();
 
@@ -31,8 +31,9 @@ public class ParserSqlFile {
         while (mat.find()) {                                  
             ArrayList<String> itemQuery = getItem(mat.group());                
             if (itemQuery.size() != size ){
-                logger.error("incorrect quantity of fields");
-                throw new ToolsException("incorrect quantity of fields");
+                String errorMessage = "SqlFileParser.get() incorrect quantity of fields = "+itemQuery.size();
+                logger.error(errorMessage);
+                throw new ToolsException(errorMessage);
             }
             result.add(itemQuery);
         }
@@ -42,9 +43,20 @@ public class ParserSqlFile {
 
     private String getItemQueryAll(String startMarker, String endMarker, String inputFileName) throws Exception {  
         String result = readFile(inputFileName, StandardCharsets.UTF_8);
-        result = StringUtils.substringAfter(result, startMarker );
-        result = StringUtils.substringBefore(result, endMarker);
+        boolean isContainStartMarker = result.contains(startMarker) ;
+        boolean isContainEndMarker = result.contains(endMarker) ;
+        if(isContainStartMarker && isContainEndMarker){
+            result = StringUtils.substringAfter(result, startMarker );
+            result = StringUtils.substringBefore(result, endMarker);
+        } else {
+            String errorMessage = "SqlFileParser.getItemQueryAll() isContainStartMarker = "+ isContainStartMarker + 
+                    " isContainEndMarker = "+isContainEndMarker;            
+            System.out.println(errorMessage);
+            logger.error(errorMessage);
+            throw new ToolsException(errorMessage);
+        }
         return result;   
+
     }
 
     private  String readFile(String path, Charset encoding) throws Exception {
@@ -91,7 +103,7 @@ public class ParserSqlFile {
         public String buffer ="";
         public boolean isWork = true;
         public abstract boolean isDelimiter(char current);
-        
+
         public void add(char current){
             buffer+= current;
         }

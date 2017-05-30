@@ -19,8 +19,8 @@ public class CategoryMapperImpl implements CategoryMapper {
         try{
             int id = (int) Integer.parseInt(fields.get(COLUMN_ID));
             result.setId(id);    
-            String name = fields.get(COLUMN_NAME);
-            result.setName(name);
+            String name = fields.get(COLUMN_NAME);            
+            result.setName(name.toLowerCase());
             int parentId = (int) Integer.parseInt(fields.get(COLUMN_PARENT_ID));
             result.setParentId(parentId);
         }catch(Exception e){

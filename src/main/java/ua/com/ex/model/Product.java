@@ -50,6 +50,9 @@ public class Product implements Serializable{
 
     @Column(name = "SIZE")
     private String size;
+    
+    @Column(name = "GROUP_ID", columnDefinition = "TINYINT")
+    private int groupId;
 
     @Transient
     private String imageBase64;
@@ -70,29 +73,8 @@ public class Product implements Serializable{
         if (getClass() != obj.getClass())
             return false;
         Product other = (Product) obj;
-        if (categoryId != other.categoryId)
-            return false;
-        if (discount != other.discount)
-            return false;
         if (id != other.id)
-            return false;
-        if (imageBase64 == null) {
-            if (other.imageBase64 != null)
-                return false;
-        } else if (!imageBase64.equals(other.imageBase64))
-            return false;
-        if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
-            return false;
-        if (price == null) {
-            if (other.price != null)
-                return false;
-        } else if (!price.equals(other.price))
-            return false;
-        if (quantity != other.quantity)
-            return false;
+            return false;       
         return true;
     }
 
