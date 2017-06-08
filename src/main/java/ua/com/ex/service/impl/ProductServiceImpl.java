@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import ua.com.ex.exception.ServiceException;
 import ua.com.ex.model.Product;
 import ua.com.ex.reprository.interfaces.ImageRepository;
 import ua.com.ex.reprository.interfaces.ProductRepository;
@@ -15,46 +16,54 @@ import ua.com.ex.service.interfaces.ProductService;
 @Service("productyService")
 public class ProductServiceImpl implements ProductService {
 
-	@Autowired
-	ProductRepository productRepository;
+    @Autowired
+    ProductRepository productRepository;
 
-	@Autowired
-	ImageRepository imageRepository;
-	
-	@Override
-	@Qualifier("imageLocalRepository")
-	public List<Product> getAll() {	    
-		return productRepository.findAll();
-	}
+    @Autowired
+    @Qualifier("imageRemoteRepository")
+    ImageRepository imageRepository;
 
-	@Override
-	public Product getProductById(int id) {
-		Product result = productRepository.findOne(id);
-		result.setImageBase64(imageRepository.getProductImageById(id));
-		return result;
-	}
-
-	@Override
-	public List<Product> getProductByCategoryIdPaging(int id, int page, int itemQuantity) {
-		List<Product> result = productRepository.findProductByCategoryIdPagination(gotoPage(page, itemQuantity), id);
-		for (Product current : result) {
-			current.setImageBase64(imageRepository.getProductImageById(id));
-		}		
-		return result;
-	}
-
-	private PageRequest gotoPage(int page, int itemQuantity) {
-		PageRequest request = new PageRequest(page, itemQuantity);
-		return request;
-	}
+    @Override    
+    public List<Product> getAll() {	    
+        return productRepository.findAll();
+    }
 
     @Override
-    public List<Product> getProductByCategoryId(int id) {
-        List<Product> result = productRepository.findProductByCategoryId(id);
-        for (Product current : result) {
-            current.setImageBase64(imageRepository.getProductImageById(id));
-        }       
+    public Product getProductById(int id) throws Exception {
+        Product result = productRepository.findOne(id);
+        if( result == null){
+            throw new ServiceException("getProductById not found "+id);
+        }
+        return prepareForSend(result);
+    }
+
+    @Override
+    public List<Product> getProductByCategoryIdPaging(int id, int page, int itemQuantity) throws Exception {
+        List<Product> result = productRepository.findProductByCategoryIdPagination(gotoPage(page, itemQuantity), id);        
+        List<String> imageAll = imageRepository.getProductImagesList(result);
+        for (int i = 0; i < result.size(); i++) {
+            result.get(i).setImageBase64(imageAll.get(i));
+        }	       
         return result;
     }
-   
+
+    private PageRequest gotoPage(int page, int itemQuantity) {      
+        return new PageRequest(page, itemQuantity);
+    }
+
+    @Override
+    public List<Product> getProductByCategoryId(int id) throws Exception {
+        List<Product> result = productRepository.findProductByCategoryId(id);        
+        List<String> imageAll = imageRepository.getProductImagesList(result);
+        for (int i = 0; i < result.size(); i++) {
+            result.get(i).setImageBase64(imageAll.get(i));
+        }         
+        return result;
+    }
+
+    private Product prepareForSend(Product current) throws Exception {        
+        current.setImageBase64(imageRepository.getProductImageById(current.getId())); 
+        return current;
+    }
+
 }

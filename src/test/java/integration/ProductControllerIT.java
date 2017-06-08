@@ -33,7 +33,7 @@ public class ProductControllerIT {
     private ProductService productService;
         
     @Test
-    public void testProductById() {
+    public void testProductById() throws Exception {
         int productId = 92;
         String url = path + productId;
         Product actual = (restTemplate.getForEntity(url, Product.class)).getBody();        
@@ -42,7 +42,7 @@ public class ProductControllerIT {
     }
     
     @Test
-    public void testProductByNotTheSameId() {
+    public void testProductByNotTheSameId() throws Exception {
         int firstProductId = 92;
         int secondProductId = 104;
         String url = path + firstProductId;        
@@ -52,7 +52,7 @@ public class ProductControllerIT {
     }
     
     @Test
-    public void testProductByCategoryId() {
+    public void testProductByCategoryId() throws Exception {
         int categoryId = 92;
         int page = 1;
         int itemQuantity = 5;

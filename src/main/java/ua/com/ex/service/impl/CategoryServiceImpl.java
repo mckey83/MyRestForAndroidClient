@@ -1,12 +1,12 @@
 package ua.com.ex.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import ua.com.ex.exception.ServiceException;
 import ua.com.ex.model.Category;
 import ua.com.ex.reprository.interfaces.CategoryRepository;
 import ua.com.ex.reprository.interfaces.ImageRepository;
@@ -19,12 +19,16 @@ public class CategoryServiceImpl implements CategoryService {
     CategoryRepository categoryRepository;
 
     @Autowired
-    @Qualifier("imageLocalRepository")
-    ImageRepository imageRepository;
+    @Qualifier("imageRemoteRepository")
+    private ImageRepository imageRepository;
 
     @Override
-    public Category getCategoryById(int id) {	   	    
-        return prepareForSend(categoryRepository.findOne(id)); 
+    public Category getCategoryById(int id) throws Exception {	
+        Category category = categoryRepository.findOne(id);
+        if (category == null){
+            throw new ServiceException("getCategoryById not found "+id);
+        }
+        return prepareForSend(category); 
     }
 
     @Override
@@ -32,24 +36,20 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.findAll();
     }
 
-    public List<Category> getCategoryByParentId(int categoryByParentId){	    
-        List<Category>  source = categoryRepository.getCategoryByParentId(categoryByParentId);		   
-        List<Category> result = new ArrayList<>();
+    @Override
+    public List<Category> getCategoryByParentId(int categoryByParentId) throws Exception{	    
+        List<Category>  source = categoryRepository.getCategoryByParentId(categoryByParentId);
+        if (source.isEmpty()){
+            throw new ServiceException("getCategoryByParentId not found "+categoryByParentId);
+        }        
         for (Category current : source) {                        
-            result.add(prepareForSend(current));          
+            prepareForSend(current);          
         }    
-        return result;    
+        return source;    
     }
 
-
-    private Category prepareForSend(Category current) {
-        String image = imageRepository.getCategoryImageById(current.getId());
-        if (!image.isEmpty()) {
-            current.setImageBase64(image);
-        }
-        else {
-            current.setImageBase64("null");
-        }       
+    private Category prepareForSend(Category current) throws Exception {              
+        current.setImageBase64(imageRepository.getCategoryImageById(current.getId()));    
         return current;
     }
 
@@ -62,8 +62,4 @@ public class CategoryServiceImpl implements CategoryService {
     public int findProductQuantityByCategoryId(int categoryId) {
         return categoryRepository.findProductQuantityByCategoryId(categoryId);
     }
-
-
-
-
 }
