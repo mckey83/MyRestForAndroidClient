@@ -38,7 +38,12 @@ public class ProductPFController implements Serializable{
     }
 
     public void update(int  parentId){        
-        list = productService.getProductByCategoryId(parentId);
+        try {
+            list = productService.getProductByCategoryId(parentId);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     } 
 
 }

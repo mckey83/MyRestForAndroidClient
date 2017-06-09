@@ -31,7 +31,7 @@ public class RemoteCategoryParser {
 
     private static final int COLUMN_CATEGORY_ENABLED = 10;
 
-    public void updateData() throws ServiceException { 
+    public void updateData() throws Exception { 
         System.out.println("RemoteCategoryParser.updateData()");
         List<Category> categories = getCategories();       
         if (!categories.isEmpty() ){            

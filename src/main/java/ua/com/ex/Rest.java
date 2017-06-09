@@ -6,10 +6,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
-import ua.com.ex.exception.ServiceException;
-import ua.com.ex.service.impl.RemoteDataServiceImpl;
-import ua.com.ex.service.interfaces.RemoteDataService;
-
 @SpringBootApplication(scanBasePackages = { "ua.com.ex" })
 public class Rest {
     
@@ -18,11 +14,11 @@ public class Rest {
 	public static void main(String[] args) { 	    
 	    ApplicationContext app = SpringApplication.run(Rest.class, args);	    
 	     
-	     RemoteDataService myBean = app.getBean(RemoteDataServiceImpl.class);
-	     try {
-            myBean.updateData();
-        } catch (ServiceException e) {            
-            logger.error("main "+ e);
-        }	    
+//	     RemoteDataService myBean = app.getBean(RemoteDataServiceImpl.class);
+//	     try {
+//            myBean.updateData();
+//        } catch (ServiceException e) {            
+//            logger.error("main "+ e);
+//        }	    
 	}
 }

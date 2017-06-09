@@ -6,12 +6,12 @@ import ua.com.ex.model.Product;
 
 public interface ProductService {
 
-	List<Product> getAll();
+	List<Product> getAll()  throws Exception;
 
-	Product getProductById(int id);
+	Product getProductById(int id) throws Exception;
 
-	List<Product> getProductByCategoryIdPaging(int id, int page, int itemQuantity);
+	List<Product> getProductByCategoryIdPaging(int id, int page, int itemQuantity) throws Exception;
 	
-	List<Product> getProductByCategoryId(int id);	
+	List<Product> getProductByCategoryId(int id) throws Exception;	
 
 }

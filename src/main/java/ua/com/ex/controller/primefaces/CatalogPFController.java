@@ -46,23 +46,29 @@ public class CatalogPFController implements Serializable{
     @PostConstruct
     public void init() {
         model =  new DefaultMenuModel();
-        List<Category> upCategoryAll = categoryService.getCategoryByParentId(1);
-        if (upCategoryAll.isEmpty()) {
-            return;
-        }
-        for(Category upCurrent : upCategoryAll ){           
-            DefaultSubMenu submenu = createSubMenu(upCurrent);            
-            List<Category> lowCategoryAll = categoryService.getCategoryByParentId(upCurrent.getId());           
-            if(lowCategoryAll.isEmpty()){                
-                DefaultMenuItem item = createOneLowCategoryByOneUp(upCurrent);                            
-                submenu.addElement(item);
-            } else {               
-                createLowCategoryAll(submenu, lowCategoryAll);
+        List<Category> upCategoryAll;
+        try {
+            upCategoryAll = categoryService.getCategoryByParentId(1);
+            if (upCategoryAll.isEmpty()) {
+                return;
             }
-            model.addElement(submenu);            
-        }             
+            for(Category upCurrent : upCategoryAll ){           
+                DefaultSubMenu submenu = createSubMenu(upCurrent);            
+                List<Category> lowCategoryAll = categoryService.getCategoryByParentId(upCurrent.getId());           
+                if(lowCategoryAll.isEmpty()){                
+                    DefaultMenuItem item = createOneLowCategoryByOneUp(upCurrent);                            
+                    submenu.addElement(item);
+                } else {               
+                    createLowCategoryAll(submenu, lowCategoryAll);
+                }
+                model.addElement(submenu);            
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
-  
+
     private DefaultSubMenu createSubMenu(Category upCurrent) {
         DefaultSubMenu submenu = new DefaultSubMenu(upCurrent.getName());
         submenu.setExpanded(false);

@@ -36,8 +36,14 @@ public class CategoryControllerIT {
         int categoryId = 3;
         String url = path + categoryId;
         Category actual = (restTemplate.getForEntity(url, Category.class)).getBody();        
-        Category expected = categoryService.getCategoryById(categoryId);
-        assertEquals(expected,actual);       
+        Category expected;
+        try {
+            expected = categoryService.getCategoryById(categoryId);
+            assertEquals(expected,actual);  
+        } catch (Exception e) {            
+            e.printStackTrace();
+        }
+             
     }
 
     @Test
@@ -46,8 +52,13 @@ public class CategoryControllerIT {
         int secondCategoryId = 4;
         String url = path + firstCategoryId;
         Category actual = (restTemplate.getForEntity(url, Category.class)).getBody();        
-        Category expected = categoryService.getCategoryById(secondCategoryId);
-        assertNotEquals(expected, actual);       
+        Category expected;
+        try {
+            expected = categoryService.getCategoryById(secondCategoryId);
+            assertNotEquals(expected, actual);    
+        } catch (Exception e) {            
+            e.printStackTrace();
+        }          
     }
     
     @Test
@@ -57,8 +68,14 @@ public class CategoryControllerIT {
         String url = path + firstCategoryId+"/parentid";
         ResponseEntity<Category[]> responseEntity = restTemplate.getForEntity(url,  Category[].class);
         List<Category> actual = new ArrayList<Category>(Arrays.asList(responseEntity.getBody()));        
-        List<Category> expected = categoryService.getCategoryByParentId(secondCategoryId);
-        assertEquals(expected, actual);       
+        List<Category> expected;
+        try {
+            expected = categoryService.getCategoryByParentId(secondCategoryId);
+            assertEquals(expected, actual);       
+        } catch (Exception e) {            
+            e.printStackTrace();
+        }
+       
     }
 
 }
