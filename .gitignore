@@ -1,9 +1,7 @@
 /bin/*
 /target/*
-/src/main/resources/images/*
 /my.log
 /.settings/*
-
 /.classpath
 /.factorypath
 /.project

@@ -7,6 +7,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class CategoryServiceImplTest {
 
     @Autowired
     private CategoryServiceImpl service;
-
+    
     @Autowired
     private FileOperation fileOperation;    
 
@@ -66,6 +67,8 @@ public class CategoryServiceImplTest {
             fail(e.getMessage());
         }         
     }
+    
+    
 
     private String getItemFromResource(String path) throws ToolsException {       
         ByteArrayOutputStream stream = fileOperation.readFile(path);
