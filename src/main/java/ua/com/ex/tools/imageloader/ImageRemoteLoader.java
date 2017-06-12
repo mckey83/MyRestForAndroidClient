@@ -6,15 +6,14 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Component;
 
 import ua.com.ex.tools.path.GetPath;
 
 @Component("imageRemoteLoader")
 public class ImageRemoteLoader extends ImageLoaderImpl { 
-   
-    
-    
+           
     @Override
     protected String getProductImagePath(int productId) {
         return  GetPath.getRemoteProductImagePath(productId);
@@ -26,14 +25,15 @@ public class ImageRemoteLoader extends ImageLoaderImpl {
     } 
     
     @Override
-    protected ByteArrayOutputStream getStream(String path) throws Exception {
+    protected String getImage(String path) throws Exception {
         URL url = new URL(path);
+        String resultAsString = "";
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         InputStream inputStream = null;
         try{
             inputStream = url.openStream();
         } catch(Exception e){                      
-            String none ="";
+            String none = "";
             inputStream = new ByteArrayInputStream(none.getBytes(StandardCharsets.UTF_8));
         } 
         finally {   
@@ -43,7 +43,9 @@ public class ImageRemoteLoader extends ImageLoaderImpl {
                 stream.write(buffer, 0, length);
             }         
             inputStream.close(); 
-        }
-        return stream;
+            resultAsString = Base64.encodeBase64String(stream.toByteArray());
+            stream.close();
+        }        
+        return resultAsString;
     }
 }

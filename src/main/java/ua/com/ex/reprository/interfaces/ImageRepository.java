@@ -13,6 +13,12 @@ public interface ImageRepository {
 	
 	String getCategoryImageById(int categoryId) throws Exception;
 	
-	List<String> getCategoryImagesList(List<Category> categoryAll) throws Exception;	
+	List<String> getCategoryImagesList(List<Category> categoryAll) throws Exception;
+	
+	void saveProductImage(int id, String image) throws Exception;
+	
+	void saveCategoryImage(int id, String image) throws Exception;
+	
+	void updateImage(Product product) throws Exception;
 	
 }

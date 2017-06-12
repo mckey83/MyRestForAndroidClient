@@ -1,4 +1,5 @@
 /bin/*
+/images/*
 /target/*
 /my.log
 /.settings/*

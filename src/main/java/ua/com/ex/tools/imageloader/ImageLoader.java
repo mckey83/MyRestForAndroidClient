@@ -10,8 +10,6 @@ public interface ImageLoader {
 
     public String getCategoryImageById(int categoryId) throws Exception;   
     
-    public String getDafaultImage() throws Exception; 
-    
-    
+    public String getDafaultImage() throws Exception;   
 
 }

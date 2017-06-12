@@ -17,9 +17,10 @@ import ua.com.ex.service.interfaces.CategoryService;
 @Component(value="categoryParser")
 public class CategoryParser {
 
-    protected static SqlFileParser parser = new SqlFileParser();
-
     private static final Logger logger = LoggerFactory.getLogger(CategoryParser.class);
+    
+    @Autowired
+    private FileSqlParser parser;    
 
     @Autowired
     private CategoryMapper categoryMapper;    

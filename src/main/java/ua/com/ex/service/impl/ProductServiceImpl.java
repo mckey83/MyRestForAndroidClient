@@ -17,11 +17,11 @@ import ua.com.ex.service.interfaces.ProductService;
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
-    ProductRepository productRepository;
+    private ProductRepository productRepository;
 
     @Autowired
     @Qualifier("imageRepository")
-    ImageRepository imageRepository;
+    private ImageRepository imageRepository;
 
     @Override    
     public List<Product> getAll() {	    
