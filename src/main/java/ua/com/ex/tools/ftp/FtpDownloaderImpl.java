@@ -1,4 +1,4 @@
-package ua.com.ex.tools;
+package ua.com.ex.tools.ftp;
 
 import java.io.File;
 import java.io.FileOutputStream;

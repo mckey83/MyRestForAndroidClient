@@ -1,4 +1,4 @@
-package ua.com.ex.tools;
+package ua.com.ex.tools.parser;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ua.com.ex.exception.ToolsException;
+import ua.com.ex.tools.file.FileOperation;
+import ua.com.ex.tools.file.FileOperationImpl;
 
 
 
@@ -39,7 +41,6 @@ public class SqlFileParser {
         }
         return result;        
     }
-
 
     private String getItemQueryAll(String startMarker, String endMarker, String inputFileName) throws Exception {  
         String result = readFile(inputFileName, StandardCharsets.UTF_8);

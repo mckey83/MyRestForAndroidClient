@@ -1,4 +1,4 @@
-package ua.com.ex.tools;
+package ua.com.ex.tools.ftp;
 
 import ua.com.ex.exception.ToolsException;
 import ua.com.ex.model.ConnectionDetail;

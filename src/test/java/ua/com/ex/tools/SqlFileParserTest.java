@@ -11,6 +11,8 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ua.com.ex.tools.parser.SqlFileParser;
+
 public class SqlFileParserTest {
 
     private static final String PRODUCT_LOCALEXBASE_TEST_SQL = "/product_localexbase_test.sql";

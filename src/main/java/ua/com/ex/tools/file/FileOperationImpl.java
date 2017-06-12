@@ -1,4 +1,4 @@
-package ua.com.ex.tools;
+package ua.com.ex.tools.file;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -52,16 +52,16 @@ public class FileOperationImpl implements FileOperation {
         ByteArrayOutputStream result = null;
         try {
             InputStream inputStream = FileOperationImpl.class.getResourceAsStream(path);
-            if(inputStream == null){
+            if(inputStream == null){                
                 String none ="";
                 inputStream = new ByteArrayInputStream(none.getBytes(StandardCharsets.UTF_8));
-            }
+            }           
             result = new ByteArrayOutputStream();
             byte[] buffer = new byte[1024];
             int length;                 
             while ((length = inputStream.read(buffer)) != -1) {
                 result.write(buffer, 0, length);
-            }           
+            }            
             inputStream.close();
         } catch (IOException e) { 
             System.out.println("readFile() "+path+" Exception");                  

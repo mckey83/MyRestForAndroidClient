@@ -1,4 +1,4 @@
-package ua.com.ex.tools;
+package ua.com.ex.tools.file;
 
 import ua.com.ex.exception.ToolsException;
 

@@ -20,7 +20,7 @@ public class ProductServiceImpl implements ProductService {
     ProductRepository productRepository;
 
     @Autowired
-    @Qualifier("imageRemoteRepository")
+    @Qualifier("imageRepository")
     ImageRepository imageRepository;
 
     @Override    

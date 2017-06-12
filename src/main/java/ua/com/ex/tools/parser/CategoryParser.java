@@ -1,4 +1,4 @@
-package ua.com.ex.tools;
+package ua.com.ex.tools.parser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +14,12 @@ import ua.com.ex.model.mapper.CategoryMapper;
 import ua.com.ex.service.interfaces.CategoryService;
 
 
-@Component(value="remoteCategoryParser")
-public class RemoteCategoryParser {
+@Component(value="categoryParser")
+public class CategoryParser {
 
     protected static SqlFileParser parser = new SqlFileParser();
 
-    private static final Logger logger = LoggerFactory.getLogger(RemoteCategoryParser.class);
+    private static final Logger logger = LoggerFactory.getLogger(CategoryParser.class);
 
     @Autowired
     private CategoryMapper categoryMapper;    

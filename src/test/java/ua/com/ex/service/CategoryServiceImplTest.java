@@ -18,7 +18,7 @@ import ua.com.ex.Rest;
 import ua.com.ex.exception.ToolsException;
 import ua.com.ex.model.Category;
 import ua.com.ex.service.impl.CategoryServiceImpl;
-import ua.com.ex.tools.FileOperation;
+import ua.com.ex.tools.file.FileOperation;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Rest.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
