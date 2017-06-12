@@ -1,8 +1,7 @@
 package ua.com.ex.tools;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ public class RemoteFileInformationTest {
 	@Test
 	public void test() {		
 		try {
-			remoteFileInformation.updateByCategoryId(3);
+			//remoteFileInformation.updateByCategoryId(3);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());			

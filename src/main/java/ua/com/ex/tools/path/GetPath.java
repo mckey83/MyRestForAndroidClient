@@ -19,10 +19,14 @@ public class GetPath {
     }
     
     public static String getLocalProductImagePath(int id){
-        return "/images/products/"+ id + "_thumb.png";
+        return "images/products/"+ id + "_thumb.png";
     }
     
-    public static String getLocatCategoryImagePath(int id){
-        return "/images/categories/cat_"+ id + ".png";
+    public static String getLocalCategoryImagePath(int id){
+        return "images/categories/cat_"+ id + ".png";
+    }
+    
+    public static String getLocalDefaultImagePath(){
+        return "images/ex.png";
     }
 }

@@ -20,7 +20,8 @@ public class ProductParser {
 
     private static final int COLUMN_PRODUCT_ENABLED = 16;
 
-    protected static SqlFileParser parser = new SqlFileParser();
+    @Autowired
+    private FileSqlParser parser;
 
     @Autowired
     private ProductMapper productMapper;    

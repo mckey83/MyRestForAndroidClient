@@ -3,11 +3,8 @@ package ua.com.ex.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import java.io.ByteArrayOutputStream;
 import java.util.List;
 
-import org.apache.tomcat.util.codec.binary.Base64;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +16,11 @@ import ua.com.ex.exception.ToolsException;
 import ua.com.ex.model.Category;
 import ua.com.ex.service.impl.CategoryServiceImpl;
 import ua.com.ex.tools.file.FileOperation;
+import ua.com.ex.tools.path.GetPath;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Rest.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class CategoryServiceImplTest {
-
-    private static final String DEFAULT_IMAGE = "/images/ex.png";
+public class CategoryServiceImplTest {   
 
     @Autowired
     private CategoryServiceImpl service;
@@ -35,9 +31,9 @@ public class CategoryServiceImplTest {
     @Test
     public void category3Imagetest() {
         int categoryId = 3;
-        String path = "/images/categories/cat_"+ categoryId + ".png";
+        String path = GetPath.getLocalCategoryImagePath(categoryId);
         try {
-            String expected = getItemFromResource(path);
+            String expected = getItemFromResource(path);            
             Category category = service.getCategoryById(categoryId);
             String actual = category.getImageBase64();           
             assertEquals(expected, actual);
@@ -71,11 +67,10 @@ public class CategoryServiceImplTest {
     
 
     private String getItemFromResource(String path) throws ToolsException {       
-        ByteArrayOutputStream stream = fileOperation.readFile(path);
-        String result = Base64.encodeBase64String(stream.toByteArray());
-        if( result.isEmpty() ) {
-            stream = fileOperation.readFile(DEFAULT_IMAGE);
-            result = Base64.encodeBase64String(stream.toByteArray());            
+        String result = fileOperation.readTextFile(path);
+        if( result.isEmpty() ) {   
+            System.out.println("isEmpty");
+            result = fileOperation.readTextFile(GetPath.getLocalDefaultImagePath());      
         }
         return result;
     }    
