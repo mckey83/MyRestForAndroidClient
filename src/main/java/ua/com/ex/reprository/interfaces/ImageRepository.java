@@ -7,6 +7,8 @@ import ua.com.ex.model.Product;
 
 public interface ImageRepository {
     
+    String getDefaultImage() throws Exception;
+    
 	String getProductImageById(int productId) throws Exception;
 	
 	List<String> getProductImagesList(List<Product> productAll) throws Exception;

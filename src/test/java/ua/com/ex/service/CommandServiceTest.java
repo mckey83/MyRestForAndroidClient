@@ -45,7 +45,6 @@ public class CommandServiceTest {
             System.out.println("actual "+sdf.format(actual));
             assertTrue(expect < actual);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             fail("Not yet implemented");
         }

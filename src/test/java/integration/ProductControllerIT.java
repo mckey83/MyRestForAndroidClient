@@ -1,7 +1,6 @@
 package integration;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,27 +29,8 @@ public class ProductControllerIT {
     private TestRestTemplate restTemplate;
     
     @Autowired
-    private ProductService productService;
-        
-    @Test
-    public void testProductById() throws Exception {
-        int productId = 92;
-        String url = path + productId;
-        Product actual = (restTemplate.getForEntity(url, Product.class)).getBody();        
-        Product expected = productService.getProductById(productId);
-        assertEquals(expected, actual);        
-    }
-    
-    @Test
-    public void testProductByNotTheSameId() throws Exception {
-        int firstProductId = 92;
-        int secondProductId = 104;
-        String url = path + firstProductId;        
-        Product firstProduct = (restTemplate.getForEntity(url, Product.class)).getBody();
-        Product secondProduct = productService.getProductById(secondProductId);
-        assertNotEquals(firstProduct, secondProduct);        
-    }
-    
+    private ProductService productService; 
+       
     @Test
     public void testProductByCategoryId() throws Exception {
         int categoryId = 92;

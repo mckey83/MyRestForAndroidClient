@@ -77,5 +77,11 @@ public class Product implements Serializable{
             return false;       
         return true;
     }
+    
+    @Override
+	public String toString() {
+		return "Product [id=" + id + ", name=" + name + ", price=" + price + ", categoryId=" + categoryId + ", color="
+				+ color + ", size=" + size + ", groupId=" + groupId + "]";
+	}
 
 }

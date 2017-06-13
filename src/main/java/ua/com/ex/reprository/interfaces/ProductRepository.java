@@ -16,5 +16,14 @@ public interface ProductRepository extends JpaRepository<Product, Integer>, JpaS
 	@Query("FROM Product p WHERE p.categoryId = ?1 ORDER BY p.name")
     List<Product> findProductByCategoryId(int categoryId);
 	
+	@Query("FROM Product p WHERE p.categoryId = ?1 and p.id = p.groupId ORDER BY p.name")
+    List<Product> findProductParentOnlyByCategoryId(int categoryId);
+	
+	@Query("FROM Product p WHERE p.categoryId = ?1 and p.id = p.groupId ORDER BY p.name")
+    List<Product> findProductParentOnlyByCategoryIdPagination(Pageable page, int categoryId);
+	
+	@Query("FROM Product p WHERE p.groupId = ?1 ORDER BY p.name")
+    List<Product> findProductByGroupId(int groupId);
+	
 	
 }

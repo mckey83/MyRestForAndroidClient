@@ -37,9 +37,7 @@ public class ImageRepositoryImpl implements ImageRepository {
         String result = "";
         if(imageLocalLoader.checkIfProductImageExist(productId)){
             result = imageLocalLoader.getProductImageById(productId); 
-        } else {            
-            result = imageLocalLoader.getDafaultImage();
-        }
+        } 
         return result;
     }
 
@@ -48,8 +46,6 @@ public class ImageRepositoryImpl implements ImageRepository {
         String result = "";
         if(imageLocalLoader.checkIfCategoryImageExist(categoryId)){
             result = imageLocalLoader.getCategoryImageById(categoryId); 
-        } else {            
-            result = imageLocalLoader.getDafaultImage();
         }
         return result;
     }
@@ -92,9 +88,7 @@ public class ImageRepositoryImpl implements ImageRepository {
             }
         } else {            
             Long dateRemote = remoteFileInformation.getLastModifiedDate(GetPath.getRemoteProductImagePath(product.getId()));
-
-            if (dateRemote > dateLocal){
-                System.out.println("dateRemote > dateLocal");
+            if (dateRemote > dateLocal){                
                 String image = imageRemoteLoader.getProductImageById(product.getId());
                 fileOperation.cleanOldFile(GetPath.getLocalProductImagePath(product.getId()));
                 saveProductImage(product.getId(), image);  
@@ -115,6 +109,11 @@ public class ImageRepositoryImpl implements ImageRepository {
     private Long getLastModifiedDate(Category category) {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    public String getDefaultImage() throws Exception {        
+        return imageLocalLoader.getDafaultImage();
     }
 
 
