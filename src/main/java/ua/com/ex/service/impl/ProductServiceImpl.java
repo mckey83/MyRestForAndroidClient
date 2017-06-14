@@ -16,7 +16,6 @@ import ua.com.ex.service.interfaces.ProductService;
 @Service("productyService")
 public class ProductServiceImpl implements ProductService {
 
-
     @Autowired
     private Configurable configurable;
 
@@ -24,7 +23,7 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     @Autowired
-    @Qualifier("imageRepository")
+    @Qualifier("imageProductCatalogItemRepository")
     private ImageRepository imageRepository;    
 
     @Override
@@ -69,11 +68,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private void prepareForSend(Product current) throws Exception {        
-        String image = imageRepository.getProductImageById(current.getId());        
+        String image = imageRepository.getById(current.getId());        
         if(image.isEmpty()) {            
-            image = imageRepository.getProductImageById(current.getGroupId());
+            image = imageRepository.getById(current.getGroupId());
             if(image.isEmpty()) {                 
-                current.setImageBase64(imageRepository.getDefaultImage());
+                current.setImageBase64(imageRepository.getDefault());
             }else {                
                 current.setImageBase64(image);
             }

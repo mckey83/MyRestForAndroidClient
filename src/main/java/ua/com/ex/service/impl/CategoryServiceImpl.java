@@ -20,7 +20,7 @@ public class CategoryServiceImpl implements CategoryService {
     CategoryRepository categoryRepository;
 
     @Autowired
-    @Qualifier("imageRepository")
+    @Qualifier("imageCategoryRepository")
     private ImageRepository imageRepository;
 
     @Override
@@ -50,7 +50,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     private Category prepareForSend(Category current) throws Exception {              
-        current.setImageBase64(imageRepository.getCategoryImageById(current.getId()));    
+        current.setImageBase64(imageRepository.getById(current.getId()));    
         return current;
     }
 

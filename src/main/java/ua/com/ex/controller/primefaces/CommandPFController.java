@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import lombok.Getter;
 import lombok.Setter;
 import ua.com.ex.service.interfaces.CommandService;
-import ua.com.ex.service.interfaces.RemoteDataService;
 
 @Getter
 @Setter
@@ -24,10 +23,7 @@ public class CommandPFController implements Serializable{
     
     private static final long serialVersionUID = 1L;
 
-    private static final Logger logger = LoggerFactory.getLogger(CommandPFController.class); 
-    
-    @Autowired
-    private RemoteDataService  remoteDataService;
+    private static final Logger logger = LoggerFactory.getLogger(CommandPFController.class);   
     
     @Autowired
     private CommandService commandService;   
@@ -35,7 +31,7 @@ public class CommandPFController implements Serializable{
     public void update() {  
         long start = System.currentTimeMillis();             
         try {
-            remoteDataService.updateData();            
+            commandService.updateData();            
         } catch (Exception e) {
             logger.error("error load resource", e);
         }         

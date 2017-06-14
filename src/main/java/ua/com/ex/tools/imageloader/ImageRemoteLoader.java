@@ -9,23 +9,11 @@ import java.nio.charset.StandardCharsets;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Component;
 
-import ua.com.ex.tools.path.GetPath;
-
 @Component("imageRemoteLoader")
-public class ImageRemoteLoader extends ImageLoaderImpl { 
-           
-    @Override
-    protected String getProductImagePath(int productId) {
-        return  GetPath.getRemoteProductImagePath(productId);
-    }
-
-    @Override
-    protected String getCategoryImagePath(int categoryId) {
-        return GetPath.getRemoteCategoryImagePath(categoryId); 
-    } 
+public class ImageRemoteLoader extends ImageLoaderImpl {      
     
     @Override
-    protected String getImage(String path) throws Exception {
+    public String getImage(String path) throws Exception {
         URL url = new URL(path);
         String resultAsString = "";
         ByteArrayOutputStream stream = new ByteArrayOutputStream();

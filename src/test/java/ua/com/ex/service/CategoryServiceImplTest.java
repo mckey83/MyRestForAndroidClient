@@ -16,6 +16,7 @@ import ua.com.ex.Rest;
 import ua.com.ex.model.Category;
 import ua.com.ex.service.impl.CategoryServiceImpl;
 import ua.com.ex.tools.imageloader.ImageLocalLoader;
+import ua.com.ex.tools.path.GetPath;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Rest.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -48,8 +49,7 @@ public class CategoryServiceImplTest {
             assertEquals(0, service.getCategoryByParentId(categoryId).size());           
         } catch (Exception e) {
             fail("getCategoryById 92" + e.getMessage());
-        }
-        
+        }        
     }
     
     @Test
@@ -59,8 +59,7 @@ public class CategoryServiceImplTest {
             assertEquals(12, service.getCategoryByParentId(categoryId).size());           
         } catch (Exception e) {
             fail("getCategoryById 92" + e.getMessage());
-        }
-        
+        }        
     }
     
     @Test
@@ -85,8 +84,9 @@ public class CategoryServiceImplTest {
         }         
     }   
 
-    private String getItemFromResource(int categoryId) throws Exception {       
-        String result = imageLocalLoader.getCategoryImageById(categoryId);
+    private String getItemFromResource(int categoryId) throws Exception {   
+        String path = GetPath.getLocalCategoryImagePath(categoryId);
+        String result = imageLocalLoader.getImage(path);
         if( result.isEmpty() ) {            
             result = imageLocalLoader.getDafaultImage();      
         }

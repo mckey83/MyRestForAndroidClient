@@ -4,8 +4,10 @@ public interface CommandService {
 
     public void shutdown();  
     
-    public void updateImage() throws Exception;
+    public void updateImageCatalogProductItem() throws Exception;
     
-    //void  updateData() throws ServiceException;
+    public void updateImageCatalogCategoryItem() throws Exception;
+    
+    public void updateData() throws Exception;   
     
 }

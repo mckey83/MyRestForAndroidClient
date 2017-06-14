@@ -28,7 +28,7 @@ public class CommandServiceTest {
     private FileOperation fileOperation;
 
     @Test
-    public void test() { 
+    public void imageCatalogProductItemTest() { 
         int id = 23;
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
@@ -38,7 +38,7 @@ public class CommandServiceTest {
             fileOperation.setLastModifiedDate(path, expect);
             MyTimer myTimer = new MyTimer ();
             myTimer.start();
-            commandService.updateImage();
+            commandService.updateImageCatalogProductItem();
             myTimer.stop();
             System.out.println("***"+myTimer.getResult()+"***");
             Long actual = fileOperation.getLastModifiedDate(path);
@@ -47,8 +47,29 @@ public class CommandServiceTest {
         } catch (Exception e) {
             e.printStackTrace();
             fail("Not yet implemented");
-        }
-        
+        }        
     }
-
+    
+    @Test
+    public void imageCatalogCategoryItemTest() { 
+        int id = 23;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
+            Long expect = new Long(10);
+            System.out.println("expect "+sdf.format(expect));
+            String path = GetPath.getLocalProductImagePath(id);
+            fileOperation.setLastModifiedDate(path, expect);
+            MyTimer myTimer = new MyTimer ();
+            myTimer.start();
+            commandService.updateImageCatalogCategoryItem();
+            myTimer.stop();
+            System.out.println("***"+myTimer.getResult()+"***");
+            Long actual = fileOperation.getLastModifiedDate(path);
+            System.out.println("actual "+sdf.format(actual));
+            assertTrue(expect < actual);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Not yet implemented");
+        }        
+    }
 }
