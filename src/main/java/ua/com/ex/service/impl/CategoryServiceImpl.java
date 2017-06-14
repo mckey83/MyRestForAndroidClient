@@ -1,5 +1,6 @@
 package ua.com.ex.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class CategoryServiceImpl implements CategoryService {
     public List<Category> getCategoryByParentId(int categoryByParentId) throws Exception{	    
         List<Category>  source = categoryRepository.getCategoryByParentId(categoryByParentId);
         if (source.isEmpty()){
-            throw new ServiceException("getCategoryByParentId not found "+categoryByParentId);
+            return new ArrayList<>();
         }        
         for (Category current : source) {                        
             prepareForSend(current);          

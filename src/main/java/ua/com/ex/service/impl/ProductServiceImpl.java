@@ -82,4 +82,13 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    @Override
+    public List<Product> findProductByGroupId(int id) throws Exception {
+        List<Product> result = productRepository.findProductByGroupId(id);
+        for (Product current : result) {
+            prepareForSend(current);
+        }  
+        return result;
+    }
+
 }

@@ -31,10 +31,10 @@ public class Category implements Serializable{
 
     @Column(name = "PARENT_ID")
     private int parentId;    
-    
+
     @Transient
     private String imageBase64;
-    
+
     @Column(name = "PRODUCT_QUANTITY")
     private int productQuantity;
 
@@ -43,7 +43,7 @@ public class Category implements Serializable{
     public int hashCode() {      
         return id + 31;
     }
-    
+
     @Transient
     @Override
     public boolean equals(Object obj) {
@@ -73,14 +73,15 @@ public class Category implements Serializable{
         return true;
     }
 
-    
-   
+    @Override
+    public String toString() {
+        return "Category [id=" + id + ", name=" + name + ", parentId=" + parentId + ", productQuantity=" + productQuantity + "]";
+    }
 
 
 
-    
 
-  
+
 
 
 }

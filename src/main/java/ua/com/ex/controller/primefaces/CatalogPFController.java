@@ -12,8 +12,6 @@ import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
 import org.primefaces.model.menu.MenuModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -29,9 +27,7 @@ import ua.com.ex.service.interfaces.CategoryService;
 @ManagedBean
 public class CatalogPFController implements Serializable{
 
-    private static final long serialVersionUID = 1L;
-
-    private static final Logger logger = LoggerFactory.getLogger(CatalogPFController.class);   
+    private static final long serialVersionUID = 1L;    
 
     private MenuModel model;
 
@@ -53,7 +49,8 @@ public class CatalogPFController implements Serializable{
                 return;
             }
             for(Category upCurrent : upCategoryAll ){           
-                DefaultSubMenu submenu = createSubMenu(upCurrent);            
+                DefaultSubMenu submenu = createSubMenu(upCurrent);
+                System.out.println(upCurrent);
                 List<Category> lowCategoryAll = categoryService.getCategoryByParentId(upCurrent.getId());           
                 if(lowCategoryAll.isEmpty()){                
                     DefaultMenuItem item = createOneLowCategoryByOneUp(upCurrent);                            

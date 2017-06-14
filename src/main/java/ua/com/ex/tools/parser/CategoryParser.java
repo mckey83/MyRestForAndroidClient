@@ -34,7 +34,8 @@ public class CategoryParser {
 
     public void updateData() throws Exception { 
         System.out.println("RemoteCategoryParser.updateData()");
-        List<Category> categories = getCategories();       
+        List<Category> categories = getCategories();
+        System.out.println("CategoryParser.updateData() all categories " + categories.size());
         if (!categories.isEmpty() ){            
             for(Category current: categories){
                 int productQuantity = categoryService.findProductQuantityByCategoryId(current.getId());               

@@ -9,5 +9,7 @@ public interface ProductService {
 	List<Product> getProductByCategoryIdPaging(int id, int page, int itemQuantity) throws Exception;
 	
 	List<Product> getProductByCategoryId(int id) throws Exception;	
+	
+	List<Product> findProductByGroupId(int id) throws Exception; 
 
 }

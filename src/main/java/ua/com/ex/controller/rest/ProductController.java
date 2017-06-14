@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ua.com.ex.model.Product;
+import ua.com.ex.model.view.ProductCard;
+import ua.com.ex.model.view.ProductCatalogItem;
 import ua.com.ex.service.interfaces.ProductService;
 
 @RestController
@@ -24,12 +26,42 @@ public class ProductController {
 	ProductService productService;	
 
 	@GetMapping("/{id}/category/{page}/page/{itemquantity}")
-	public List<Product> getProductByCategoryId(@PathVariable("id") int id, @PathVariable("page") int page, @PathVariable("itemquantity") int itemQuantity) {
-		try {
-            return productService.getProductByCategoryIdPaging(id ,page, itemQuantity);
+	public List<ProductCatalogItem> getProductCatalogItemByCategoryId(@PathVariable("id") int id, @PathVariable("page") int page, @PathVariable("itemquantity") int itemQuantity) {
+		
+	    List<Product> productAll = new ArrayList<>();
+	    ArrayList<ProductCatalogItem> result = new ArrayList<ProductCatalogItem>();
+	    try {
+	        productAll = productService.getProductByCategoryIdPaging(id ,page, itemQuantity);
         } catch (Exception e) {
             logger.info("getProductByCategoryId() "+ e.getMessage());
-            return new ArrayList<Product>();
+            return result;
         } 
+	    for(Product current : productAll){
+	        result.add(new ProductCatalogItem(current));
+	    }
+	    return result;
+	    
 	}
+	
+	@GetMapping("/{id}")
+    public ProductCard getProductCardById(@PathVariable("id") int id) {	
+	    logger.info("getProductCardById = "+ id);
+		Product parent = new Product();
+		List<Product> children = new ArrayList<>();
+		List<Product> productAllByGroupId = new ArrayList<>();      
+        try {
+            productAllByGroupId = productService.findProductByGroupId(id);
+        } catch (Exception e) {
+            logger.error("productAllByGroupId() "+ e.getMessage());
+            return new ProductCard();
+        } 
+        for(Product current : productAllByGroupId){
+        	if(current.getId() == id){
+        		parent = current;
+        	} else {
+        		children.add(current);
+        	}
+        }       
+        return new ProductCard(parent, children);  
+    }
 }

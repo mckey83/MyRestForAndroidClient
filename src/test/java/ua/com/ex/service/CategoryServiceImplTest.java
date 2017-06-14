@@ -42,6 +42,28 @@ public class CategoryServiceImplTest {
     }
 
     @Test
+    public void categoryByParentIdNotFoundtest() {
+        int categoryId = 92;     
+        try {            
+            assertEquals(0, service.getCategoryByParentId(categoryId).size());           
+        } catch (Exception e) {
+            fail("getCategoryById 92" + e.getMessage());
+        }
+        
+    }
+    
+    @Test
+    public void categoryByParentIdFoundtest() {
+        int categoryId = 1;     
+        try {            
+            assertEquals(12, service.getCategoryByParentId(categoryId).size());           
+        } catch (Exception e) {
+            fail("getCategoryById 92" + e.getMessage());
+        }
+        
+    }
+    
+    @Test
     public void category333test() {
         int categoryId = 333;     
         try {            

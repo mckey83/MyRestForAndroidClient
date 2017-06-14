@@ -43,7 +43,7 @@ public class ImagesRepositoryTest {
     @Test
     public void checkGetDefaultProductImageTest() {        
         try {
-            String image = imageRepository.getProductImageById(0);  
+            String image = imageRepository.getDefaultImage();
             int expected = (image.getBytes()).length;
             assertEquals(expected, DEFAULT_IMAGE_LENGHT);
         } catch (Exception e) { 
@@ -67,7 +67,7 @@ public class ImagesRepositoryTest {
     @Test
     public void checkGetDefaultCategoryImageTest() {        
         try {
-            assertEquals(imageRepository.getCategoryImageById(0).length(), DEFAULT_IMAGE_LENGHT);
+            assertEquals(0, imageRepository.getCategoryImageById(0).length());
         } catch (Exception e) { 
             e.printStackTrace();
             fail("checkGetDefaultCategoryImageTest");
