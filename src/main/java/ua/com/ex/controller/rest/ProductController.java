@@ -41,8 +41,8 @@ public class ProductController {
 	    }
 	    return result;
 	    
-	}
-	
+	}	
+
 	@GetMapping("/{id}")
     public ProductCard getProductCardById(@PathVariable("id") int id) {	
 	    logger.info("getProductCardById = "+ id);

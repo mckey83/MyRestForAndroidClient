@@ -22,7 +22,7 @@ public class ProductCatalogItem {
        this.quantity = p.getQuantity();      
        this.color = p.getColor();      
        this.size = p.getSize();      
-       this.imageBase64 = p.getImageBase64();
+       this.imageCatalogItem = p.getImageBase64();
     }   
     
     private int id;
@@ -39,7 +39,7 @@ public class ProductCatalogItem {
    
     private String size;    
    
-    private String imageBase64;   
+    private String imageCatalogItem;   
     
     @Override
     public int hashCode() {
@@ -63,7 +63,7 @@ public class ProductCatalogItem {
     @Override
     public String toString() {
         return "ProductCatalogItem [id=" + id + ", name=" + name + ", price=" + price + ", discount=" + discount + ", quantity=" + quantity + ", color=" + color + ", size=" + size
-                + ", imageBase64=" + imageBase64 + "]";
+                + ", imageBase64=" + imageCatalogItem + "]";
     }
     
 }

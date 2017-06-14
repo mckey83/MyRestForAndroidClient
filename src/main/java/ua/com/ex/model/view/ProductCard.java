@@ -24,7 +24,7 @@ public class ProductCard {
 		this.quantity = parent.getQuantity();
 		this.color = parent.getColor();
 		this.size = parent.getSize();
-		this.imageMain = parent.getImageBase64();
+		this.imageProductCardMain = parent.getImageBase64();
 		this.children = new ArrayList<>();
 		for(Product p : children){
 		    this.children.add(new ProductCardItem(p));
@@ -45,7 +45,7 @@ public class ProductCard {
 
     private String size ; 
 
-	private String imageMain = "";	
+	private String imageProductCardMain = "";	
 	
 	private List<ProductCardItem> children ;
 

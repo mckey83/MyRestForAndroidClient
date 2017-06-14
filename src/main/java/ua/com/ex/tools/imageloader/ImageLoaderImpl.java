@@ -11,12 +11,7 @@ public abstract class ImageLoaderImpl implements ImageLoader {
     @Autowired
     protected FileOperation fileOperation;    
 
-    protected abstract String getImage(String path) throws Exception ;
-
-    protected abstract String getCategoryImagePath(int categoryId) ;
-
-    protected abstract String getProductImagePath(int productId) ;
-
+    public abstract String getImage(String path) throws Exception ;   
     
     @Override
     public String getDafaultImage() throws Exception {        
@@ -24,34 +19,13 @@ public abstract class ImageLoaderImpl implements ImageLoader {
     }      
     
     @Override
-    public boolean checkIfProductImageExist(int productId) throws Exception {  
-        return checkIfExist(getProductImagePath(productId));  
-    }
-
-    @Override
-    public boolean checkIfCategoryImageExist(int categoryId) throws Exception {
-        return checkIfExist(getCategoryImagePath(categoryId));
-    } 
-
-    @Override
-    public String getProductImageById(int productId) throws Exception {  
-        String path = getProductImagePath(productId);
-        return getImage(path);
-    }     
-
-    @Override
-    public String getCategoryImageById(int categoryId) throws Exception {  
-        String path = getCategoryImagePath(categoryId);
-        return getImage(path);            
-    }       
-
-    private boolean checkIfExist(String path) throws Exception { 
+    public boolean checkIfExist(String path) throws Exception {  
         String image = getImage(path);        
         if(image.isEmpty() ) {
             return false;           
         } else {
             return true;
-        }
-    }   
+        }  
+    }    
 
 }

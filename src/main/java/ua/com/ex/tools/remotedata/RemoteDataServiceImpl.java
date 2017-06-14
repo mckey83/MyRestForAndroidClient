@@ -1,4 +1,4 @@
-package ua.com.ex.service.impl;
+package ua.com.ex.tools.remotedata;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

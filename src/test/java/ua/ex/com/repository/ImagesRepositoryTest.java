@@ -8,6 +8,7 @@ import static org.junit.Assert.fail;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -22,8 +23,13 @@ public class ImagesRepositoryTest {
 
     private static final int DEFAULT_IMAGE_LENGHT = 1004;
 
-    @Autowired    
-    private ImageRepository imageRepository;
+    @Autowired
+    @Qualifier("imageCategoryRepository")
+    private ImageRepository imageCategoryRepository;
+    
+    @Autowired
+    @Qualifier("imageProductCatalogItemRepository")
+    private ImageRepository imageProductCatalogItemRepository;
 
     @Autowired    
     private FileOperation fileOperation;
@@ -32,7 +38,7 @@ public class ImagesRepositoryTest {
     public void checkLocalProductImageTest() {        
         int id = 24136;
         try {            
-            int actual = imageRepository.getProductImageById(id).length();
+            int actual = imageProductCatalogItemRepository.getById(id).length();
             assertTrue(actual > 0);
         } catch (Exception e) { 
             e.printStackTrace();
@@ -43,7 +49,7 @@ public class ImagesRepositoryTest {
     @Test
     public void checkGetDefaultProductImageTest() {        
         try {
-            String image = imageRepository.getDefaultImage();
+            String image = imageProductCatalogItemRepository.getDefault();
             int expected = (image.getBytes()).length;
             assertEquals(expected, DEFAULT_IMAGE_LENGHT);
         } catch (Exception e) { 
@@ -56,7 +62,7 @@ public class ImagesRepositoryTest {
     public void checkLocalCategoryImageTest() {        
         int id = 3;
         try {            
-            int actual = imageRepository.getCategoryImageById(id).length();
+            int actual = imageCategoryRepository.getById(id).length();
             assertTrue(actual > DEFAULT_IMAGE_LENGHT);
         } catch (Exception e) { 
             e.printStackTrace();
@@ -67,7 +73,7 @@ public class ImagesRepositoryTest {
     @Test
     public void checkGetDefaultCategoryImageTest() {        
         try {
-            assertEquals(0, imageRepository.getCategoryImageById(0).length());
+            assertEquals(0, imageCategoryRepository.getById(0).length());
         } catch (Exception e) { 
             e.printStackTrace();
             fail("checkGetDefaultCategoryImageTest");
@@ -78,15 +84,15 @@ public class ImagesRepositoryTest {
     public void saveProductImageTest() {
         int id = 24136;
         try {
-            String expect = imageRepository.getProductImageById(id);
+            String expect = imageProductCatalogItemRepository.getById(id);
             if(expect.isEmpty()){
                 fail("don't read image");
             }           
             String path = GetPath.getLocalProductImagePath(id);           
             fileOperation.cleanOldFile(path);
             assertFalse(fileOperation.isExist(path));
-            imageRepository.saveProductImage(id, expect);            
-            String actual = imageRepository.getProductImageById(id);
+            imageProductCatalogItemRepository.save(id, expect);            
+            String actual = imageProductCatalogItemRepository.getById(id);
             assertEquals(expect.length(), actual.length());
             assertTrue(fileOperation.isExist(path));
         } catch (Exception e) {            
