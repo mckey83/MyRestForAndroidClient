@@ -19,7 +19,7 @@ public class CategoryServiceImpl implements CategoryService {
     CategoryRepository categoryRepository;
 
     @Autowired
-    @Qualifier("imageRemoteRepository")
+    @Qualifier("imageRepository")
     private ImageRepository imageRepository;
 
     @Override

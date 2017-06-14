@@ -1,7 +1,4 @@
-package ua.com.ex.tools;
-import java.io.ByteArrayOutputStream;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
+package ua.com.ex.tools.parser;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,29 +6,31 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import ua.com.ex.exception.ToolsException;
+import ua.com.ex.tools.file.FileOperation;
 
+@Component(value="fileSqlParser")
+public class FileSqlParser { 
 
+    private static final Logger logger = LoggerFactory.getLogger(FileSqlParser.class);
 
-public class SqlFileParser { 
-
-    private static final Logger logger = LoggerFactory.getLogger(SqlFileParser.class);
-
-    private FileOperation fileOperation = new FileOperationImpl();
+    @Autowired
+    private FileOperation fileOperation;
 
     private static final String PATTERN_GET_ALL_FIELDS = "\\(.*?\\),|\\(.*?\\);";
 
     public  ArrayList<ArrayList<String>> get (String start, String end, String fileNameIn, int size) throws Exception{
-        ArrayList<ArrayList<String>> result = new ArrayList<>();        
-
+        ArrayList<ArrayList<String>> result = new ArrayList<>();
         String itemQueryAll = getItemQueryAll(start, end, fileNameIn);                        
         Pattern p = Pattern.compile(PATTERN_GET_ALL_FIELDS);
         Matcher  mat = p.matcher(itemQueryAll);
         while (mat.find()) {                                  
             ArrayList<String> itemQuery = getItem(mat.group());                
             if (itemQuery.size() != size ){
-                String errorMessage = "SqlFileParser.get() incorrect quantity of fields = "+itemQuery.size();
+                String errorMessage = "FileSqlParser.get() incorrect quantity of fields = "+itemQuery.size();
                 logger.error(errorMessage);
                 throw new ToolsException(errorMessage);
             }
@@ -40,31 +39,21 @@ public class SqlFileParser {
         return result;        
     }
 
-
     private String getItemQueryAll(String startMarker, String endMarker, String inputFileName) throws Exception {  
-        String result = readFile(inputFileName, StandardCharsets.UTF_8);
+        String result = fileOperation.readTextFile(inputFileName);
         boolean isContainStartMarker = result.contains(startMarker) ;
         boolean isContainEndMarker = result.contains(endMarker) ;
         if(isContainStartMarker && isContainEndMarker){
             result = StringUtils.substringAfter(result, startMarker );
             result = StringUtils.substringBefore(result, endMarker);
         } else {
-            String errorMessage = "SqlFileParser.getItemQueryAll() isContainStartMarker = "+ isContainStartMarker + 
+            String errorMessage = "FileSqlParser.getItemQueryAll() isContainStartMarker = "+ isContainStartMarker + 
                     " isContainEndMarker = "+isContainEndMarker;            
-            System.out.println(errorMessage);
             logger.error(errorMessage);
             throw new ToolsException(errorMessage);
         }
-        return result;   
-
+        return result;  
     }
-
-    private  String readFile(String path, Charset encoding) throws Exception {
-        String result = "";        
-        ByteArrayOutputStream stream = fileOperation.readExternFile(path);  
-        result = stream.toString("UTF-8");       
-        return result;
-    }    
 
     private ArrayList<String> getItem(String sourceQuery){ 
         sourceQuery = sourceQuery.substring(1, sourceQuery.length());

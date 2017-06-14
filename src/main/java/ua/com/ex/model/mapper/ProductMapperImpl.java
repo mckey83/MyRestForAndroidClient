@@ -26,7 +26,6 @@ public class ProductMapperImpl implements ProductMapper {
     public Product getProduct(ArrayList<String> fields) {
         Product result = new Product();
         try{
-
             setId(fields, result); 
             setName(fields, result);
             setPrice(fields, result);

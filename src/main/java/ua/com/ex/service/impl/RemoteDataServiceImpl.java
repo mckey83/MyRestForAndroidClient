@@ -10,12 +10,12 @@ import ua.com.ex.exception.ToolsException;
 import ua.com.ex.model.ConnectionDetail;
 import ua.com.ex.model.DownloadFileDetail;
 import ua.com.ex.service.interfaces.RemoteDataService;
-import ua.com.ex.tools.Arhivator;
-import ua.com.ex.tools.FileOperation;
-import ua.com.ex.tools.FtpDownloader;
-import ua.com.ex.tools.FtpDownloaderImpl;
-import ua.com.ex.tools.RemoteCategoryParser;
-import ua.com.ex.tools.RemoteProductParser;
+import ua.com.ex.tools.file.Arhivator;
+import ua.com.ex.tools.file.FileOperation;
+import ua.com.ex.tools.ftp.FtpDownloader;
+import ua.com.ex.tools.ftp.FtpDownloaderImpl;
+import ua.com.ex.tools.parser.CategoryParser;
+import ua.com.ex.tools.parser.ProductParser;
 
 @Component(value="remoteDataService")
 public class RemoteDataServiceImpl implements RemoteDataService {
@@ -23,10 +23,10 @@ public class RemoteDataServiceImpl implements RemoteDataService {
     private static final Logger logger = LoggerFactory.getLogger(RemoteDataServiceImpl.class);
 
     @Autowired   
-    private RemoteCategoryParser remoteCategoryParser;
+    private CategoryParser categoryParser;
 
     @Autowired    
-    private RemoteProductParser remoteProductParser;
+    private ProductParser productParser;
 
     @Autowired
     private Arhivator arhivator;
@@ -40,8 +40,8 @@ public class RemoteDataServiceImpl implements RemoteDataService {
             clean();  
             downloadFile();
             logger.info("updateData() - start");
-            remoteProductParser.updateData();
-            remoteCategoryParser.updateData();           
+            productParser.updateData();
+            categoryParser.updateData();           
             logger.info("updateData() - done");
         } catch (Exception e) {
 

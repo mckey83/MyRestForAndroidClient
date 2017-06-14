@@ -21,27 +21,7 @@ public class ProductController {
     private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
     
 	@Autowired
-	ProductService productService;
-
-	@GetMapping
-	public List<Product> getAllProducts() {	    
-		try {
-            return productService.getAll();
-        } catch (Exception e) {
-            logger.info("getAllProducts() "+ e.getMessage());
-            return new ArrayList<Product>();
-        }
-	}
-
-	@GetMapping("/{id}")
-	public Product getProductById(@PathVariable("id") int id) {
-		try {
-            return productService.getProductById(id);
-        } catch (Exception e) {
-            logger.info(" getProductById() "+ e.getMessage());
-            return new Product();
-        }
-	}
+	ProductService productService;	
 
 	@GetMapping("/{id}/category/{page}/page/{itemquantity}")
 	public List<Product> getProductByCategoryId(@PathVariable("id") int id, @PathVariable("page") int page, @PathVariable("itemquantity") int itemQuantity) {

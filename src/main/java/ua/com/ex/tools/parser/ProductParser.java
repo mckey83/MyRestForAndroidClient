@@ -1,4 +1,4 @@
-package ua.com.ex.tools;
+package ua.com.ex.tools.parser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +13,15 @@ import ua.com.ex.model.Product;
 import ua.com.ex.model.mapper.ProductMapper;
 import ua.com.ex.reprository.interfaces.ProductRepository;
 
-@Component(value="remoteProductParser")
-public class RemoteProductParser {
+@Component(value="productParser")
+public class ProductParser {
 
-    private static final Logger logger = LoggerFactory.getLogger(RemoteProductParser.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProductParser.class);
 
     private static final int COLUMN_PRODUCT_ENABLED = 16;
 
-    protected static SqlFileParser parser = new SqlFileParser();
+    @Autowired
+    private FileSqlParser parser;
 
     @Autowired
     private ProductMapper productMapper;    
