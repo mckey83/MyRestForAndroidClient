@@ -20,7 +20,8 @@ public class ProductCardItem {
         this.discount = p.getDiscount();
         this.quantity = p.getQuantity();
         this.color = p.getColor();
-        this.size = p.getSize();        
+        this.size = p.getSize();  
+        this.image = p.getImageBase64();
     }
     
     private int id ;
@@ -34,6 +35,8 @@ public class ProductCardItem {
     private String color ;
 
     private String size ; 
+    
+    private String image ;
     
     @Override
     public String toString() {
