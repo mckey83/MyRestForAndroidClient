@@ -20,12 +20,7 @@ public abstract class ImageLoaderImpl implements ImageLoader {
     
     @Override
     public boolean checkIfExist(String path) throws Exception {  
-        String image = getImage(path);        
-        if(image.isEmpty() ) {
-            return false;           
-        } else {
-            return true;
-        }  
+    	return fileOperation.isExist(path);
     }    
 
 }

@@ -47,7 +47,7 @@ public class CommandServiceImpl implements CommandService {
 
     @Override
     public void updateImageCatalogProductItem() throws Exception {        
-        List<Product> productAll = productRepository.findAll();
+        List<Product> productAll = productRepository.findProductByCategoryId(23);
         for(Product current : productAll){
             imageRepository.update(current.getId());
         }        

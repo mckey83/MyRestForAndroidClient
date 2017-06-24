@@ -44,7 +44,20 @@ public class ImagesRepositoryTest {
             e.printStackTrace();
             fail("checkLocalProductImageTest");
         }       
-    }  
+    } 
+    
+    @Test
+    public void checkRemoteProductImageTest() {        
+        int id = 20091;
+        try {            
+            imageProductCatalogItemRepository.update(id);
+            int actual = imageProductCatalogItemRepository.getById(id).length();
+            assertTrue(actual > 0);
+        } catch (Exception e) { 
+            e.printStackTrace();
+            fail("checkLocalProductImageTest");
+        }       
+    } 
 
     @Test
     public void checkGetDefaultProductImageTest() {        

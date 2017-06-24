@@ -15,5 +15,7 @@ public class ImageCategoryRepository extends ImageRepositoryImpl {
     @Override
     protected String getRemotePath(int id) {        
         return  GetPath.getRemoteCategoryImagePath(id);
-    }	
+    }
+
+		
 }

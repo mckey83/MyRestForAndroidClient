@@ -10,6 +10,7 @@ import ua.com.ex.reprository.interfaces.ImageRepository;
 import ua.com.ex.tools.file.FileOperation;
 import ua.com.ex.tools.http.RemoteFileInformation;
 import ua.com.ex.tools.imageloader.ImageLoader;
+import ua.com.ex.tools.path.GetPath;
 
 public abstract class ImageRepositoryImpl implements ImageRepository{
 
@@ -31,14 +32,23 @@ public abstract class ImageRepositoryImpl implements ImageRepository{
     protected abstract String getLocalPath(int productId) ;
    
     protected abstract String getRemotePath(int id);
+    
+   
+	protected String getRemotePathForColor(int id) {
+		return GetPath.getRemoteProductImagePathForColor(id);
+	}
 
     @Override
     public String getById(int id) throws Exception {
         String path = getLocalPath(id);
         String result = "";
         if(imageLocalLoader.checkIfExist(path)){
+        	System.out.println("ImageRepositoryImpl.getById() exist "+path);
             result = imageLocalLoader.getImage(path); 
-        } 
+        }else{
+        	System.out.println("ImageRepositoryImpl.getById() not exist "+path);
+        }
+        
         return result;
     }
    
@@ -66,6 +76,13 @@ public abstract class ImageRepositoryImpl implements ImageRepository{
             String image = imageRemoteLoader.getImage(path);
             if(!image.isEmpty()){
                 save(id, image);
+            }
+            else{
+            	path = getRemotePathForColor(id);
+                image = imageRemoteLoader.getImage(path);
+                if(!image.isEmpty()){
+                    save(id, image);
+                }
             }
         } else {    
             String pathRemote = getRemotePath(id);

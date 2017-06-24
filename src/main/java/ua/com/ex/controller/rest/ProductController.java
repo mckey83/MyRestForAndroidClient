@@ -19,49 +19,58 @@ import ua.com.ex.service.interfaces.ProductService;
 @RestController
 @RequestMapping("/product")
 public class ProductController {
-    
-    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
-    
+
+	private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
+
 	@Autowired
 	ProductService productService;	
 
 	@GetMapping("/{id}/category/{page}/page/{itemquantity}")
 	public List<ProductCatalogItem> getProductCatalogItemByCategoryId(@PathVariable("id") int id, @PathVariable("page") int page, @PathVariable("itemquantity") int itemQuantity) {
-		
-	    List<Product> productAll = new ArrayList<>();
-	    ArrayList<ProductCatalogItem> result = new ArrayList<ProductCatalogItem>();
-	    try {
-	        productAll = productService.getProductByCategoryIdPaging(id ,page, itemQuantity);
-        } catch (Exception e) {
-            logger.info("getProductByCategoryId() "+ e.getMessage());
-            return result;
-        } 
-	    for(Product current : productAll){
-	        result.add(new ProductCatalogItem(current));
-	    }
-	    return result;
-	    
+		logger.info("getProductCatalogItemByCategoryId");
+		List<Product> productAll = new ArrayList<>();
+		ArrayList<ProductCatalogItem> result = new ArrayList<ProductCatalogItem>();
+		try {
+			productAll = productService.getProductByCategoryIdPaging(id ,page, itemQuantity);
+		} catch (Exception e) {
+			logger.info("getProductByCategoryId() "+ e.getMessage());
+			return result;
+		} 
+		for(Product current : productAll){
+			result.add(new ProductCatalogItem(current));
+		}
+		return result;
+
 	}	
 
 	@GetMapping("/{id}")
-    public ProductCard getProductCardById(@PathVariable("id") int id) {	
-	    logger.info("getProductCardById = "+ id);
+	public ProductCard getProductCardById(@PathVariable("id") int id) {	
+		logger.info("getProductCardById = "+ id);
+		System.out.println("getProductCardById = "+ id);
+		ProductCard result = null;
 		Product parent = new Product();
 		List<Product> children = new ArrayList<>();
 		List<Product> productAllByGroupId = new ArrayList<>();      
-        try {
-            productAllByGroupId = productService.findProductByGroupId(id);
-        } catch (Exception e) {
-            logger.error("productAllByGroupId() "+ e.getMessage());
-            return new ProductCard();
-        } 
-        for(Product current : productAllByGroupId){
-        	if(current.getId() == id){
-        		parent = current;
-        	} else {
-        		children.add(current);
-        	}
-        }       
-        return new ProductCard(parent, children);  
-    }
+		try {
+			productAllByGroupId = productService.findProductByGroupId(id);
+		} catch (Exception e) {
+			System.out.println("productAllByGroupId() "+ e.getMessage());
+			logger.error("productAllByGroupId() "+ e.getMessage());
+			return new ProductCard();
+		} 
+		if (!productAllByGroupId.isEmpty()){
+			for(Product current : productAllByGroupId){
+				if(current.getId() == id){
+					parent = current;
+				} else {
+					children.add(current);
+				}
+			}   
+			result = new ProductCard(parent, children);
+		} else {
+			result = new ProductCard(parent, new ArrayList<>());
+		}
+		System.out.println(result);
+		return result;  
+	}
 }
