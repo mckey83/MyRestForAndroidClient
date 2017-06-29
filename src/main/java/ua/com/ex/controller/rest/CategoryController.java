@@ -1,57 +1,59 @@
 package ua.com.ex.controller.rest;
 
-import java.util.ArrayList;
-import java.util.List;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ua.com.ex.model.Category;
-import ua.com.ex.service.interfaces.CategoryService;
+import ua.com.ex.service.CategoryService;
 
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
 
     private static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
-    
-	@Autowired
-	CategoryService categoryService;
 
-	@GetMapping
-	public List<Category> getAllCategories() {	    	    
-		try {
-            return categoryService.getAll();
-        } catch (Exception e) {
-            logger.info("getAllCategories() "+ e.getMessage());
-            return new ArrayList<Category>();
-        }		
-	}
+    @Autowired
+    CategoryService categoryService;
 
-	@GetMapping("/{id}")
-	public Category getCategoryById(@PathVariable("id") int id) {	         
-		try {
-		    return categoryService.getCategoryById(id);
+    @GetMapping
+    public ResponseEntity<?> getAllCategories() {
+        try {
+            return new ResponseEntity<>(categoryService.getAll(), OK);
         } catch (Exception e) {
-            logger.info("getCategoryById() "+ e.getMessage());
-            return new Category();
+            String message = e.getMessage();
+            logger.warn(message);
+            return new ResponseEntity<>(message, BAD_REQUEST);
         }
-		
-	}
-	
-	@GetMapping("/{id}/parentid")
-    public List<Category> getCategoryByParentId(@PathVariable("id") int id) {	    
-	    try {
-	        return categoryService.getCategoryByParentId(id);
-        } catch (Exception e) {
-            logger.info("getCategoryByParentId() "+ e.getMessage());
-            return new ArrayList<Category>();
-        }	     
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getCategoryById(@PathVariable("id") int id) {
+        try {
+            return new ResponseEntity<>(categoryService.getCategoryById(id), OK);
+        } catch (Exception e) {
+            String message = e.getMessage();
+            logger.warn(message);
+            return new ResponseEntity<>(message, NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/{id}/parentid")
+    public ResponseEntity<?> getCategoryByParentId(@PathVariable("id") int id) {
+        try {
+            return new ResponseEntity<>(categoryService.getCategoryByParentId(id), OK);
+        } catch (Exception e) {
+            String message = e.getMessage();
+            logger.warn(message);
+            return new ResponseEntity<>(message, NOT_FOUND);
+        }
+    }
 }

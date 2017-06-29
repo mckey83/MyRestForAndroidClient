@@ -12,13 +12,15 @@ import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
 import org.primefaces.model.menu.MenuModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import lombok.Getter;
 import lombok.Setter;
 import ua.com.ex.model.Category;
-import ua.com.ex.service.interfaces.CategoryService;
+import ua.com.ex.service.CategoryService;
 
 @Getter
 @Setter
@@ -27,7 +29,9 @@ import ua.com.ex.service.interfaces.CategoryService;
 @ManagedBean
 public class CatalogPFController implements Serializable{
 
-    private static final long serialVersionUID = 1L;    
+    private static final long serialVersionUID = 1L;   
+
+    private static final Logger logger = LoggerFactory.getLogger(CatalogPFController.class);
 
     private MenuModel model;
 
@@ -61,8 +65,7 @@ public class CatalogPFController implements Serializable{
                 model.addElement(submenu);            
             }
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            logger.error(e.getMessage());            
         }
     }
 
@@ -105,5 +108,4 @@ public class CatalogPFController implements Serializable{
         RequestContext context = RequestContext.getCurrentInstance(); 
         context.update("optionPanel");
     }
-
 }

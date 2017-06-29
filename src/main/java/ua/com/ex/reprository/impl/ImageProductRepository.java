@@ -4,16 +4,17 @@ import org.springframework.stereotype.Repository;
 
 import ua.com.ex.configuration.Path;
 
-@Repository("imageCategoryRepository")
-public class ImageCategoryRepository extends ImageRepositoryImpl {
-
+@Repository("imageProductRepository")
+public class ImageProductRepository extends ImageRepositoryImpl {
+    
     @Override
     protected String getLocalPath(int productId) {
-        return Path.getLocalCategoryImagePath(productId);
-    }
-
+        return Path.getLocalProductImagePath(productId);
+    }   
+   
     @Override
     protected String getRemotePath(int id) {
-        return Path.getRemoteCategoryImagePath(id);
+        return Path.getRemoteProductImagePath(id);
     }
+	  
 }

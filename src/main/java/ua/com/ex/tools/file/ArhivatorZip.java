@@ -12,9 +12,9 @@ import org.springframework.stereotype.Component;
 import ua.com.ex.exception.ToolsException;
 
 @Component("arhivator")
-public class ArhivatorImpl implements Arhivator {
+public class ArhivatorZip implements Arhivator {
     
-    private static final Logger logger = LoggerFactory.getLogger(ArhivatorImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ArhivatorZip.class);
 
     @Override
     public void unzip(String achive, String result) throws ToolsException{       

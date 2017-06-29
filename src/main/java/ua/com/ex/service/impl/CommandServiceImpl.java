@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 
 import ua.com.ex.model.Category;
 import ua.com.ex.model.Product;
-import ua.com.ex.reprository.interfaces.CategoryRepository;
-import ua.com.ex.reprository.interfaces.ImageRepository;
-import ua.com.ex.reprository.interfaces.ProductRepository;
-import ua.com.ex.service.interfaces.CommandService;
-import ua.com.ex.service.interfaces.RemoteDataService;
+import ua.com.ex.reprository.CategoryRepository;
+import ua.com.ex.reprository.ImageRepository;
+import ua.com.ex.reprository.ProductRepository;
+import ua.com.ex.service.CommandService;
+import ua.com.ex.service.RemoteDataService;
 
 @Service("commandService")
 public class CommandServiceImpl implements CommandService {
@@ -32,8 +32,8 @@ public class CommandServiceImpl implements CommandService {
     private RemoteDataService remoteDataService;
     
     @Autowired
-    @Qualifier("imageProductCatalogItemRepository")
-    private ImageRepository imageRepository;
+    @Qualifier("imageProductRepository")
+    private ImageRepository imageProductRepository;
     
     @Autowired
     @Qualifier("imageCategoryRepository")
@@ -47,9 +47,9 @@ public class CommandServiceImpl implements CommandService {
 
     @Override
     public void updateImageCatalogProductItem() throws Exception {        
-        List<Product> productAll = productRepository.findAll();
+        List<Product> productAll = productRepository.findProductByCategoryId(23);
         for(Product current : productAll){
-            imageRepository.update(current.getId());
+            imageProductRepository.update(current.getId());
         }        
     }
 

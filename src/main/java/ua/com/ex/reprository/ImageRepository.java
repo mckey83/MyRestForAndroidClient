@@ -1,4 +1,4 @@
-package ua.com.ex.reprository.interfaces;
+package ua.com.ex.reprository;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public interface ImageRepository {
 	
 	List<String> getByList(List<Integer> list) throws Exception;	
 	
-	void save(int id, String image) throws Exception;	
+	boolean save(int id, String image) throws Exception;	
 	
 	void update(int id) throws Exception;
 	

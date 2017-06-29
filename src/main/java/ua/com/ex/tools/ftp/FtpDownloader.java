@@ -1,8 +1,8 @@
 package ua.com.ex.tools.ftp;
 
+import ua.com.ex.configuration.ConnectionDetail;
+import ua.com.ex.configuration.DownloadFileDetail;
 import ua.com.ex.exception.ToolsException;
-import ua.com.ex.model.ConnectionDetail;
-import ua.com.ex.model.DownloadFileDetail;
 
 public interface FtpDownloader {
 

@@ -11,9 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import ua.com.ex.configuration.ConnectionDetail;
+import ua.com.ex.configuration.DownloadFileDetail;
 import ua.com.ex.exception.ToolsException;
-import ua.com.ex.model.ConnectionDetail;
-import ua.com.ex.model.DownloadFileDetail;
 
 @Component("ftpDownloaderService")
 public class FtpDownloaderImpl implements FtpDownloader {

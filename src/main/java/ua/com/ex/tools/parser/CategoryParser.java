@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import ua.com.ex.exception.ServiceException;
 import ua.com.ex.model.Category;
 import ua.com.ex.model.mapper.CategoryMapper;
-import ua.com.ex.service.interfaces.CategoryService;
+import ua.com.ex.service.CategoryService;
 
 
 @Component(value="categoryParser")
@@ -49,7 +49,7 @@ public class CategoryParser {
         ArrayList<ArrayList<String>> categoriesAsString = new ArrayList<>();
         ArrayList<Category> result = new ArrayList<>();
         try{
-            categoriesAsString = parser.get("INSERT INTO `categories` VALUES", "/*!40000 ALTER TABLE `categories` ENABLE KEYS */;", "localexbase.sql", 33);
+            categoriesAsString = parser.get("INSERT INTO `categories` VALUES", "/*!40000 ALTER TABLE `categories` ENABLE KEYS */;", "localexbase.sql", 34);
             for (ArrayList<String> current: categoriesAsString){
                 if (isNeed(current)) {                
                     result.add(categoryMapper.getCategory(current));                

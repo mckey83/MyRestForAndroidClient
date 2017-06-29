@@ -10,7 +10,7 @@ public interface FileOperation {
 
     public byte[] readBinaryFile(String path) throws ToolsException;
 
-    public void save(String path, String image) throws ToolsException;
+    public boolean save(String path, String image) throws ToolsException;
 
     public boolean isExist(String path);
 

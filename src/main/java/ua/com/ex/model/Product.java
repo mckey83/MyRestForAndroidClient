@@ -55,7 +55,7 @@ public class Product implements Serializable{
     private int groupId;
 
     @Transient
-    private String imageBase64;
+    private String imageMain;
 
     @Transient
     @Override

@@ -1,15 +1,15 @@
-package ua.com.ex.tools.remotedata;
+package ua.com.ex.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import ua.com.ex.configuration.ConnectionDetail;
+import ua.com.ex.configuration.DownloadFileDetail;
 import ua.com.ex.exception.ServiceException;
 import ua.com.ex.exception.ToolsException;
-import ua.com.ex.model.ConnectionDetail;
-import ua.com.ex.model.DownloadFileDetail;
-import ua.com.ex.service.interfaces.RemoteDataService;
+import ua.com.ex.service.RemoteDataService;
 import ua.com.ex.tools.file.Arhivator;
 import ua.com.ex.tools.file.FileOperation;
 import ua.com.ex.tools.ftp.FtpDownloader;
@@ -17,44 +17,49 @@ import ua.com.ex.tools.ftp.FtpDownloaderImpl;
 import ua.com.ex.tools.parser.CategoryParser;
 import ua.com.ex.tools.parser.ProductParser;
 
-@Component(value="remoteDataService")
+@Component(value = "remoteDataService")
 public class RemoteDataServiceImpl implements RemoteDataService {
 
     private static final Logger logger = LoggerFactory.getLogger(RemoteDataServiceImpl.class);
 
-    @Autowired   
+    @Autowired
     private CategoryParser categoryParser;
 
-    @Autowired    
+    @Autowired
     private ProductParser productParser;
 
     @Autowired
     private Arhivator arhivator;
 
     @Autowired
-    private FileOperation  fileOperation;
+    private FileOperation fileOperation;
+    
+    private ConnectionDetail connectionDetail = new ConnectionDetail();
+    
+    private DownloadFileDetail downloadFileDetail = new DownloadFileDetail();
+    
 
     @Override
     public void updateData() throws ServiceException {
         try {
-            clean();  
+            clean();
             downloadFile();
             logger.info("updateData() - start");
             productParser.updateData();
-            categoryParser.updateData();           
+            categoryParser.updateData();
             logger.info("updateData() - done");
         } catch (Exception e) {
+            throw new ServiceException(e);
+        }
+    }
 
-        }  
-    } 
-
-    private void downloadFile() throws Exception {        
+    private void downloadFile() throws Exception {
         FtpDownloader ftpDownloader = new FtpDownloaderImpl();
-        ftpDownloader.connect(new ConnectionDetail("ex.com.ua", "makeev", "kathmandu12"));
-        ftpDownloader.download(new DownloadFileDetail("exbase.sql.gz", "localexbase.sql.gz"));
-        ftpDownloader.disconnect();        
+        ftpDownloader.connect(connectionDetail);
+        ftpDownloader.download(downloadFileDetail);
+        ftpDownloader.disconnect();
         arhivator.unzip("localexbase.sql.gz", "localexbase.sql");
-        logger.info("downloadFile() - done");        
+        logger.info("downloadFile() - done");
     }
 
     private void clean() throws ToolsException {

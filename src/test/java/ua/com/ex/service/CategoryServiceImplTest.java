@@ -13,10 +13,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ua.com.ex.Rest;
+import ua.com.ex.configuration.Path;
 import ua.com.ex.model.Category;
 import ua.com.ex.service.impl.CategoryServiceImpl;
 import ua.com.ex.tools.imageloader.ImageLocalLoader;
-import ua.com.ex.tools.path.GetPath;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Rest.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -85,7 +85,7 @@ public class CategoryServiceImplTest {
     }   
 
     private String getItemFromResource(int categoryId) throws Exception {   
-        String path = GetPath.getLocalCategoryImagePath(categoryId);
+        String path = Path.getLocalCategoryImagePath(categoryId);
         String result = imageLocalLoader.getImage(path);
         if( result.isEmpty() ) {            
             result = imageLocalLoader.getDafaultImage();      

@@ -1,8 +1,10 @@
-/bin/*
-/images/*
-/target/*
+/.settings
+/bin
+/images
+/target
+/src/main/java/ua/com/ex/configuration
 /my.log
-/.settings/*
+
 /.classpath
 /.factorypath
 /.project

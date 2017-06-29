@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import ua.com.ex.exception.ServiceException;
 import ua.com.ex.model.Product;
 import ua.com.ex.model.mapper.ProductMapper;
-import ua.com.ex.reprository.interfaces.ProductRepository;
+import ua.com.ex.reprository.ProductRepository;
 
 @Component(value="productParser")
 public class ProductParser {
@@ -61,7 +61,7 @@ public class ProductParser {
         ArrayList<ArrayList<String>> productsAsString;
         ArrayList<Product> result = new ArrayList<>();        
         try{   
-            productsAsString = parser.get("INSERT INTO `products` VALUES", "/*!40000 ALTER TABLE `products` ENABLE KEYS */;", "localexbase.sql", 46);
+            productsAsString = parser.get("INSERT INTO `products` VALUES", "/*!40000 ALTER TABLE `products` ENABLE KEYS */;", "localexbase.sql", 47);
             for (ArrayList<String> current: productsAsString){
                 if (isNeedProductFields(current)){                
                     result.add(productMapper.getProduct(current));

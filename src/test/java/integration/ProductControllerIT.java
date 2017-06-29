@@ -20,7 +20,7 @@ import ua.com.ex.Rest;
 import ua.com.ex.model.Product;
 import ua.com.ex.model.view.ProductCard;
 import ua.com.ex.model.view.ProductCatalogItem;
-import ua.com.ex.service.interfaces.ProductService;
+import ua.com.ex.service.ProductService;
 
 
 @RunWith(SpringRunner.class)

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Controller;
 
 import lombok.Getter;
 import lombok.Setter;
-import ua.com.ex.service.interfaces.CommandService;
+import ua.com.ex.service.CommandService;
 
 @Getter
 @Setter

@@ -13,5 +13,4 @@ public class RemoteFileInformation {
 		HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
 		return httpCon.getLastModified();		
 	}
-
 }
